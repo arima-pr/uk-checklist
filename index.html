@@ -8,138 +8,310 @@
 <meta name="apple-mobile-web-app-title" content="みぱ☆UK">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-512.png">
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
-<title>イギリス ワーホリ準備リスト</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<title>みぱの英国手帖</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500&family=Shippori+Mincho:wght@500;700;800&family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Klee+One:wght@400;600&display=swap">
 <style>
-/* Layout: 一本の縦カラム。上に進み具合、下に「出発前」「到着後」の2区分をチェック行で並べる */
+/* Layout: 目次（トップ）と5つのページを切り替える1枚のページ。見出しはボルドー×金のチケット */
 :root{
-  --bg:#f5f6f9; --surface:#ffffff; --ink:#1a2233; --muted:#5b6478; --line:#dde1ea;
-  --navy:#22335c; --red:#c8202f; --red-soft:#fbe9ea; --green:#1f7a4d; --green-soft:#e5f3ec;
-  --amber:#8a5a00; --amber-soft:#fdf3dc;
-  --f-display:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --ink:#1a2233;--muted:#5b6478;--line:#e1e4ec;--surface:#ffffff;--group-head:#f4eee4;--navy:#22335c;
+  --tk-1:#6b1f2a;--tk-2:#4a121b;--gold:#e9cf98;--gold-soft:rgba(233,207,152,.5);--gold-faint:rgba(233,207,152,.22);--gold-light:#f6e3b8;--tk-text:#fbf1dc;
+  --red:#c8202f;--red-soft:#fbe9ea;--amber:#8a5a00;--amber-soft:#fdf3dc;
+  --on-photo:#ffffff;--on-photo-muted:rgba(255,255,255,.86);
   --f-body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-serif:"Shippori Mincho","Yu Mincho","Hiragino Mincho ProN",serif;
+  --f-classic:"Cormorant Garamond","Times New Roman",serif;
   --f-mono:"IBM Plex Mono",ui-monospace,monospace;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#121722; --surface:#1a2130; --ink:#e7eaf1; --muted:#9aa3b6; --line:#2c3547;
-  --navy:#9fb4e8; --red:#ff6b74; --red-soft:#3a1e24; --green:#5fd39a; --green-soft:#16302a;
-  --amber:#f0c060; --amber-soft:#3a3020; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#121722; --surface:#1a2130; --ink:#e7eaf1; --muted:#9aa3b6; --line:#2c3547;
-  --navy:#9fb4e8; --red:#ff6b74; --red-soft:#3a1e24; --green:#5fd39a; --green-soft:#16302a;
-  --amber:#f0c060; --amber-soft:#3a3020; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:#2a1a12}
+body{margin:0;color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:rgba(28,16,10,.8)}
 
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7}
-.wrap{max-width:720px;margin:0 auto;padding-block:28px 56px;
+/* 背景：目次ではくっきり、各ページではぼかし */
+.bg,.bg-sharp{position:fixed;inset:0;z-index:-1;background:#3a2418 url("bg.webp") center 30%/cover no-repeat}
+.bg{filter:blur(7px);transform:scale(1.1)}
+.bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,12,8,.45),rgba(24,12,8,.55))}
+.bg-sharp{opacity:0;transition:opacity .6s ease}
+.bg-sharp::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,16,10,.25) 0%,rgba(28,16,10,.4) 50%,rgba(28,16,10,.68) 100%)}
+body.on-home .bg-sharp{opacity:1}
+
+.view{max-width:720px;margin:0 auto;padding-block:72px 56px;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
-  display:flex;flex-direction:column;gap:28px}
+  display:flex;flex-direction:column;gap:20px}
 
-header{display:flex;flex-direction:column;gap:10px}
-.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--red);text-transform:uppercase}
-h1{font-family:var(--f-display);font-weight:900;font-size:clamp(26px,6vw,36px);line-height:1.3;margin:0;color:var(--navy);text-wrap:balance}
-.lead{margin:0;color:var(--muted)}
+/* ===== 目次 ===== */
+.home{padding-top:36px;gap:14px}
+.hero{text-align:center;color:var(--on-photo);padding:24px 0 8px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.hero .sub{font:italic 500 17px var(--f-classic);color:var(--gold);letter-spacing:.06em}
+.hero h1{margin:2px 0 4px;font:800 clamp(28px,8.6vw,36px)/1.3 var(--f-serif);letter-spacing:.06em;text-shadow:0 2px 14px rgba(0,0,0,.55)}
+.hero .meta{font:600 11px var(--f-classic);letter-spacing:.3em;color:var(--gold)}
+.orn{display:flex;align-items:center;gap:10px;color:var(--gold);font-size:12px;width:100%}
+.orn::before,.orn::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.hero .orn{max-width:300px;margin-top:10px}
+.toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.toc li{filter:drop-shadow(0 6px 12px rgba(0,0,0,.35))}
+.strip{position:relative;display:flex;align-items:stretch;min-height:78px;border-radius:12px;text-decoration:none;
+  background:linear-gradient(160deg,var(--tk-1),var(--tk-2));color:var(--gold);overflow:hidden;
+  -webkit-mask:radial-gradient(circle 9px at calc(100% - 78px) 0,#0000 97%,#000) top/100% 51% no-repeat,radial-gradient(circle 9px at calc(100% - 78px) 100%,#0000 97%,#000) bottom/100% 51% no-repeat;
+  mask:radial-gradient(circle 9px at calc(100% - 78px) 0,#0000 97%,#000) top/100% 51% no-repeat,radial-gradient(circle 9px at calc(100% - 78px) 100%,#0000 97%,#000) bottom/100% 51% no-repeat}
+.strip::after{content:"";position:absolute;inset:5px;border:1px solid var(--gold-soft);border-radius:8px;pointer-events:none}
+.strip:focus-visible{outline:none}
+.strip:focus-visible::after{border-color:var(--gold-light);border-width:2px}
+.strip:active{filter:brightness(1.15)}
+.strip .main{flex:1;min-width:0;padding:14px 16px 14px 18px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.strip .k{font:600 10px var(--f-classic);letter-spacing:.3em}
+.strip .t{font:800 19px/1.35 var(--f-serif);color:var(--gold-light);letter-spacing:.04em}
+.strip .side{width:78px;flex:none;border-left:1.5px dashed var(--gold-soft);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
+.strip .side b{font:600 18px var(--f-classic);color:var(--gold-light);font-variant-numeric:tabular-nums}
+.strip .side small{font:600 9px var(--f-classic);letter-spacing:.2em}
+.strip .side .arr{font:500 28px/1 var(--f-classic);color:var(--gold-light)}
+.strip .shine{position:absolute;inset:0;pointer-events:none;opacity:0;
+  background:linear-gradient(110deg,transparent 38%,rgba(255,236,190,.5) 50%,transparent 62%);background-size:300% 100%}
+.foot{margin:6px 0 0;text-align:center;font-size:12px;color:var(--on-photo-muted);text-shadow:0 1px 6px rgba(0,0,0,.6)}
 
-.progress{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
-.progress-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
-.progress-row strong{font-size:15px}
-.count{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
-.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
-.bar span{display:block;height:100%;width:0;background:var(--green);border-radius:99px;transition:width .3s ease}
+/* ===== 各ページの見出しチケット ===== */
+.back{position:fixed;z-index:20;top:calc(env(safe-area-inset-top,0px) + 12px);
+  left:max(calc(16px + env(safe-area-inset-left,0px)),calc((100vw - 720px) / 2 + 16px));
+  display:flex;align-items:center;gap:4px;height:40px;padding:0 16px 0 12px;border-radius:99px;
+  background:rgba(74,18,27,.92);border:1px solid var(--gold-soft);color:var(--gold);font:700 14px var(--f-body);text-decoration:none;
+  box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.back span{font:500 22px/1 var(--f-classic);margin-top:-2px}
+.back:focus-visible{outline:3px solid var(--gold-light);outline-offset:2px}
+body.on-home .back{display:none}
 
-section{display:flex;flex-direction:column;gap:14px}
-.sec-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap}
-.tag.before{background:var(--red-soft);color:var(--red)}
-.tag.after{background:var(--green-soft);color:var(--green)}
-h2{font-family:var(--f-display);font-size:21px;font-weight:700;margin:0;flex:1;min-width:0}
-.sec-count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
-.sec-note{margin:-6px 0 0;color:var(--muted);font-size:14px}
+.tk{position:relative;border-radius:14px;overflow:hidden;background:linear-gradient(160deg,var(--tk-1),var(--tk-2));color:var(--gold)}
+.tk::after{content:"";position:absolute;inset:7px;border:1px solid var(--gold-soft);border-radius:9px;pointer-events:none}
+.tk.has-stub{border-radius:14px 14px 0 0;
+  -webkit-mask:radial-gradient(circle 11px at 0 100%,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 100%,#0000 97%,#000) right/51% 100% no-repeat;
+  mask:radial-gradient(circle 11px at 0 100%,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 100%,#0000 97%,#000) right/51% 100% no-repeat}
+.tk.has-stub::after{bottom:0;border-bottom:0;border-radius:9px 9px 0 0}
+.tk .body{padding:18px 22px 18px;display:flex;flex-direction:column}
+.tk .top{display:flex;justify-content:space-between;gap:12px;font:600 12px var(--f-classic);letter-spacing:.32em}
+.tk .s{font:italic 500 15px var(--f-classic);letter-spacing:.06em;margin-top:10px}
+.tk h2{margin:0;font:800 clamp(23px,7.4vw,30px)/1.3 var(--f-serif);color:var(--gold-light);letter-spacing:.04em;white-space:nowrap;text-shadow:0 1px 0 rgba(0,0,0,.3)}
+.tk .orn{margin:12px 0 10px}
+.fields{display:flex;gap:22px;flex-wrap:wrap}
+.fields div{font:600 10px var(--f-classic);letter-spacing:.2em}
+.fields b{display:block;font:700 14px var(--f-serif);letter-spacing:.04em;color:var(--tk-text);margin-top:2px}
 
-.group{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.group h3{margin:0;padding:10px 18px;font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--navy);background:color-mix(in srgb,var(--navy) 7%,var(--surface));border-bottom:1px solid var(--line)}
+.stub{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;margin-top:-20px;
+  display:flex;align-items:center;gap:12px;height:54px;padding:0 22px;background:var(--tk-2);border-radius:0 0 14px 14px;
+  -webkit-mask:radial-gradient(circle 11px at 0 0,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 0,#0000 97%,#000) right/51% 100% no-repeat;
+  mask:radial-gradient(circle 11px at 0 0,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 0,#0000 97%,#000) right/51% 100% no-repeat}
+.stub::before{content:"";position:absolute;left:18px;right:18px;top:0;border-top:1.5px dashed var(--gold-soft)}
+.stub::after{content:"";position:absolute;inset:0 7px 7px;border:1px solid var(--gold-soft);border-top:0;border-radius:0 0 9px 9px;pointer-events:none}
+.stub-lab{font:600 11px var(--f-classic);letter-spacing:.28em;color:var(--gold);white-space:nowrap}
+.bar{flex:1;height:4px;border-radius:99px;background:var(--gold-faint);overflow:hidden}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#c9a45c,#f3dca6);border-radius:99px;transition:width .3s ease}
+.stub-count{font:600 16px var(--f-classic);letter-spacing:.06em;color:var(--gold-light);white-space:nowrap;font-variant-numeric:tabular-nums}
+.stub.stuck{-webkit-mask:none;mask:none;padding-left:118px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.stub.stuck::before{display:none}
+
+/* ===== 中身 ===== */
+.sec-note{margin:0;color:var(--on-photo-muted);font-size:14px;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.group{background:var(--surface);border-radius:12px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.group h3{margin:0;padding:10px 18px;font:700 13px var(--f-serif);letter-spacing:.08em;color:var(--tk-1);background:var(--group-head);border-bottom:1px solid var(--line)}
 .item{display:grid;grid-template-columns:24px 1fr;gap:12px;padding:14px 18px;border-top:1px solid var(--line);cursor:pointer;align-items:start}
 .group h3 + .item{border-top:0}
-.item input{appearance:none;width:22px;height:22px;margin:2px 0 0;border:2px solid var(--muted);border-radius:6px;display:grid;place-content:center;cursor:pointer;background:var(--surface)}
-.item input::after{content:"";width:6px;height:11px;border:solid var(--surface);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px);opacity:0}
-.item input:checked{background:var(--green);border-color:var(--green)}
+.item input{appearance:none;-webkit-appearance:none;width:22px;height:22px;margin:2px 0 0;border:2px solid var(--muted);border-radius:6px;display:grid;place-content:center;cursor:pointer;background:var(--surface)}
+.item input::after{content:"";width:6px;height:11px;border:solid var(--gold);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px);opacity:0}
+.item input:checked{background:var(--tk-1);border-color:var(--tk-1)}
 .item input:checked::after{opacity:1}
 .item input:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
 .item .txt{min-width:0;display:flex;flex-direction:column;gap:2px}
 .item .t{font-weight:700}
 .item .d{color:var(--muted);font-size:14px}
 .item.done .t{text-decoration:line-through;text-decoration-color:var(--muted);color:var(--muted)}
-.item:hover{background:color-mix(in srgb,var(--navy) 4%,var(--surface))}
 
-.notice{background:var(--amber-soft);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
-.notice h2{font-size:16px;color:var(--amber)}
-.notice ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
-.notice a{color:var(--navy)}
-
-.reset{display:flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:13px}
-.reset button{font:inherit;font-size:13px;padding:6px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
-.reset button.confirm{border-color:var(--red);color:var(--red)}
-.reset button:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
-.progress-row{align-items:center}
-.progress-right{display:flex;align-items:center;gap:12px}
-.menu-btn{width:40px;height:40px;border:1px solid var(--line);border-radius:10px;background:var(--surface);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;cursor:pointer;padding:0}
-.menu-btn span{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px}
-.menu-btn:focus-visible,.close-btn:focus-visible,.menu-item:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
-.group,section,.notice{scroll-margin-top:110px}
-.scrim{position:fixed;inset:0;background:rgba(8,12,22,.5);z-index:20}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:min(320px,85vw);background:var(--surface);z-index:21;overflow-y:auto;box-shadow:-8px 0 24px rgba(0,0,0,.18);display:flex;flex-direction:column;gap:8px;
-  padding:calc(16px + env(safe-area-inset-top,0px)) calc(16px + env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) 16px}
-.drawer-head{display:flex;justify-content:space-between;align-items:center;padding:0 4px 8px;border-bottom:1px solid var(--line)}
-.drawer-head strong{font-family:var(--f-display);font-size:18px;color:var(--navy)}
-.close-btn{width:36px;height:36px;border:0;background:transparent;color:var(--ink);font-size:26px;line-height:1;cursor:pointer;border-radius:8px}
-.close-btn:hover{background:color-mix(in srgb,var(--navy) 8%,var(--surface))}
-#menuList{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
-.menu-heading{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--red);padding:14px 12px 4px}
-.menu-item{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px;border:0;border-radius:8px;background:transparent;color:var(--ink);font:inherit;font-weight:700;text-align:left;cursor:pointer}
-.menu-item.sub{padding-left:24px;font-weight:500}
-.menu-item:hover{background:color-mix(in srgb,var(--navy) 7%,var(--surface))}
-.menu-count{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.menu-count.full{color:var(--green)}
-.tag.help{background:color-mix(in srgb,var(--navy) 12%,var(--surface));color:var(--navy)}
-.info{gap:12px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0}
-.card h3{margin:0;font-size:16px;color:var(--navy)}
+.card{background:var(--surface);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.card h3{margin:0;font:700 16px var(--f-serif);color:var(--tk-1);letter-spacing:.04em}
 .card p{margin:0}
 .card ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
 .card .d,.num .d{color:var(--muted);font-size:14px}
 .mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:500;white-space:nowrap}
-.numbers{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
-.num{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}
-.num b{font-family:var(--f-mono);font-size:28px;line-height:1.2;color:var(--navy);font-variant-numeric:tabular-nums}
-.num.urgent{border-color:var(--red);background:var(--red-soft)}
+.numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.num{background:var(--surface);border-radius:12px;padding:12px 12px;display:flex;flex-direction:column;gap:2px;box-shadow:0 4px 18px rgba(0,0,0,.18);font-size:13px;line-height:1.5}
+.num b{font-family:var(--f-mono);font-size:24px;line-height:1.2;color:var(--navy);font-variant-numeric:tabular-nums}
+.num .d{font-size:12px}
+.num.urgent{background:var(--red-soft);border:1px solid var(--red)}
 .num.urgent b{color:var(--red)}
 .num .t{font-weight:700}
 .memo label{font-size:13px;font-weight:700;margin-top:6px}
-.memo input{font:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%;box-sizing:border-box}
+.memo input{font:inherit;font-size:16px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:#faf8f4;color:var(--ink);width:100%}
 .memo input:focus-visible{outline:3px solid var(--navy);outline-offset:1px}
-@media (prefers-reduced-motion:reduce){.bar span{transition:none}}
+.notice{background:var(--amber-soft);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.notice h3{margin:0;font-size:16px;color:var(--amber)}
+.notice ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.notice a{color:var(--navy)}
+.reset{display:flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--on-photo-muted);font-size:13px}
+.reset button{font:inherit;font-size:13px;padding:6px 14px;border-radius:8px;border:1px solid var(--gold-soft);background:rgba(74,18,27,.85);color:var(--gold);cursor:pointer}
+.reset button.confirm{border-color:#ff9aa2;color:#ffd0d4}
+.reset button:focus-visible{outline:3px solid var(--gold-light);outline-offset:2px}
+
+/* ===== 目次の追加部品 ===== */
+.clock{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:10px;font:600 11px var(--f-classic);letter-spacing:.24em;color:var(--gold)}
+.clock b{font:600 19px var(--f-classic);color:var(--gold-light);letter-spacing:.04em;margin-left:8px;font-variant-numeric:tabular-nums}
+.daycount{margin-top:6px;font:700 15px var(--f-serif);letter-spacing:.06em;color:var(--gold-light);text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.more-orn{max-width:300px;margin:6px auto 0}
+.tiles{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tile{position:relative;display:flex;flex-direction:column;justify-content:center;gap:2px;min-height:76px;padding:14px 16px;border-radius:12px;text-decoration:none;
+  background:linear-gradient(160deg,var(--tk-1),var(--tk-2));color:var(--gold);box-shadow:0 6px 12px rgba(0,0,0,.35)}
+.tile::after{content:"";position:absolute;inset:5px;border:1px solid var(--gold-soft);border-radius:8px;pointer-events:none}
+.tile .k{font:600 9px var(--f-classic);letter-spacing:.26em}
+.tile .t{font:800 15px/1.4 var(--f-serif);color:var(--gold-light);letter-spacing:.02em}
+.tile:active{filter:brightness(1.15)}
+.tile:focus-visible{outline:none}
+.tile:focus-visible::after{border-color:var(--gold-light);border-width:2px}
+
+/* ===== 到着した日の流れ ===== */
+.step{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start;flex-direction:initial}
+.step .n{width:34px;height:34px;border-radius:50%;background:var(--tk-1);color:var(--gold-light);display:grid;place-items:center;font:600 18px/1 var(--f-classic)}
+.step > div{display:flex;flex-direction:column;gap:8px;min-width:0}
+.qa{margin:2px 0 0;display:grid;gap:4px}
+.qa dt{font-weight:700;font-size:14px;margin-top:6px}
+.qa dt small{display:block;font-weight:500;font-size:12px;color:var(--muted)}
+.qa dd{margin:0;padding:8px 12px;border-radius:8px;background:#f4eee4;font-weight:700;font-size:14px;color:var(--tk-1)}
+
+/* ===== 見せる英語カード ===== */
+.plist{display:flex;flex-direction:column;gap:10px}
+.phrase{display:flex;flex-direction:column;gap:2px;width:100%;text-align:left;background:var(--surface);border:0;border-radius:12px;padding:14px 16px;cursor:pointer;font:inherit;color:inherit;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.phrase .jp{font-weight:700;font-size:13px;color:var(--tk-1)}
+.phrase .en{font-weight:700;font-size:17px;line-height:1.45;color:var(--ink)}
+.phrase .hint{font-size:12px;color:var(--muted)}
+.phrase:active,.chip:active{filter:brightness(.95)}
+.phrase:focus-visible,.chip:focus-visible{outline:3px solid var(--gold-light);outline-offset:2px}
+.chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.chip{font:inherit;font-weight:700;font-size:14px;padding:10px 12px;border-radius:10px;border:1px solid #e6d9c2;background:#faf5ec;color:var(--ink);cursor:pointer;text-align:left}
+.show{position:fixed;inset:0;z-index:60;background:#ffffff;color:#111111;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:22px;text-align:center;cursor:pointer;
+  padding:calc(32px + env(safe-area-inset-top,0px)) 24px calc(56px + env(safe-area-inset-bottom,0px))}
+.show p{margin:0}
+.show .big{font:700 clamp(30px,9vw,56px)/1.3 var(--f-body)}
+.show .addr{font:700 clamp(20px,6vw,32px)/1.5 var(--f-body);padding:14px 18px;border:3px solid #111111;border-radius:12px;white-space:pre-wrap;word-break:break-word;max-width:100%}
+.show .jp2{font-size:16px;color:#666666}
+.show .close{position:absolute;left:0;right:0;bottom:calc(20px + env(safe-area-inset-bottom,0px));font-size:13px;color:#888888}
+
+/* ===== 電話ボタン・ツール・やりたいこと ===== */
+.tel{display:inline-flex;align-items:center;justify-content:center;gap:6px;align-self:flex-start;margin-top:6px;padding:8px 14px;border-radius:99px;background:var(--tk-1);color:var(--gold-light);font-weight:700;font-size:13px;text-decoration:none;white-space:nowrap}
+.num .tel{align-self:stretch;padding:8px 6px}
+.tel:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.clocks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.clocks > div{display:flex;flex-direction:column;align-items:center;padding:12px 8px;border-radius:10px;background:#faf5ec}
+.clocks b{font:500 34px/1.2 var(--f-mono);color:var(--tk-1);font-variant-numeric:tabular-nums}
+.tool label{font-size:13px;font-weight:700;margin-top:4px}
+.tool input{font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#faf8f4;color:var(--ink);width:100%;min-width:0}
+.tool input:focus-visible{outline:3px solid var(--navy);outline-offset:1px}
+.result{font:700 20px/1.5 var(--f-serif);color:var(--tk-1)}
+.quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;font-size:14px;font-variant-numeric:tabular-nums}
+.quick span{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed var(--line);padding:2px 0}
+.addrow{display:flex;gap:8px}
+.addrow button{font:inherit;font-weight:700;font-size:15px;padding:0 18px;border:0;border-radius:8px;background:var(--tk-1);color:var(--gold-light);cursor:pointer;white-space:nowrap}
+.addrow button:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.wrow{display:grid;grid-template-columns:24px minmax(0,1fr) 36px;gap:12px;align-items:center;padding:12px 10px 12px 18px;border-top:1px solid var(--line)}
+.wrow:first-child{border-top:0}
+.wrow input{appearance:none;-webkit-appearance:none;width:22px;height:22px;margin:0;border:2px solid var(--muted);border-radius:6px;display:grid;place-content:center;cursor:pointer;background:var(--surface)}
+.wrow input::after{content:"";width:6px;height:11px;border:solid var(--gold);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px);opacity:0}
+.wrow input:checked{background:var(--tk-1);border-color:var(--tk-1)}
+.wrow input:checked::after{opacity:1}
+.wrow .wt{font-weight:700;word-break:break-word}
+.wrow.done .wt{text-decoration:line-through;color:var(--muted)}
+.wrow .del{width:36px;height:36px;border:0;background:transparent;color:var(--muted);font-size:20px;line-height:1;cursor:pointer;border-radius:8px}
+.wrow .del:focus-visible,.wrow input:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+
+/* ===== 寂しくなったとき：手紙のような、やわらかい見た目 ===== */
+#v-homesick .card{background:#fffaf1;gap:10px}
+#v-homesick .card h3{font:600 18px/1.5 "Klee One",var(--f-serif);color:#7a2e22;letter-spacing:.02em}
+#v-homesick .card p,#v-homesick .card li{font:400 16px/1.9 "Klee One",var(--f-body);color:#3a2e30}
+#v-homesick .card ul{gap:10px}
+#v-homesick .card li::marker{content:"✿  ";color:#c9a45c;font-size:12px}
+#v-homesick .letter{background:#fffaf1;border:1px solid #ead9bb;outline:1px solid #ead9bb;outline-offset:-6px}
+#v-homesick .letter .sign{text-align:right;font-weight:600;color:#7a2e22}
+
+/* ===== 動き ===== */
+@keyframes stripIn{0%{opacity:0;transform:perspective(800px) translateY(26px) rotateX(30deg) scale(.94);filter:blur(8px) brightness(1.8)}60%{opacity:1;filter:none}100%{opacity:1;transform:none;filter:none}}
+@keyframes heroIn{0%{opacity:0;transform:translateY(-10px);filter:blur(6px)}100%{opacity:1;transform:none;filter:none}}
+@keyframes ttlIn{0%{opacity:0;letter-spacing:.35em;filter:blur(4px)}100%{opacity:1;letter-spacing:.06em;filter:none}}
+@keyframes shine{0%{background-position:120% 0;opacity:1}90%{opacity:1}100%{background-position:-20% 0;opacity:0}}
+@keyframes tkIn{0%{opacity:0;transform:perspective(900px) translateY(26px) rotateX(18deg) scale(.94);filter:blur(8px) brightness(1.6)}60%{opacity:1;filter:none}100%{opacity:1;transform:none;filter:none}}
+@keyframes stubIn{0%{opacity:0;transform:translateY(-14px)}100%{opacity:1;transform:none}}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:none}}
+body.intro .hero{animation:heroIn .9s ease-out .1s both}
+body.intro .hero h1{animation:ttlIn 1.1s ease-out .2s both}
+body.intro .toc .strip{animation:stripIn .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.45s + var(--i) * .13s)}
+body.intro .toc .strip .shine{animation:shine 1.2s ease-in-out both;animation-delay:calc(1.2s + var(--i) * .13s)}
+body.intro .more-orn{animation:fadeUp .6s ease-out 1.2s both}
+body.intro .tiles .tile{animation:stripIn .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.45s + var(--i) * .13s)}
+body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
+.home.enter .hero,.home.enter .toc,.home.enter .more-orn,.home.enter .tiles,.home.enter .foot{animation:fadeUp .45s ease-out both}
+.view.enter .tk{animation:tkIn .8s cubic-bezier(.2,.8,.2,1) both}
+.view.enter .tk h2{animation:ttlIn .9s ease-out .25s both}
+.view.enter .tk .shine{animation:shine 1.1s ease-in-out .7s both}
+.view.enter .stub{animation:stubIn .5s cubic-bezier(.2,.8,.2,1) .45s both}
+.view.enter .content{animation:fadeUp .55s ease-out .4s both}
+.tk .shine{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;
+  background:linear-gradient(110deg,transparent 38%,rgba(255,236,190,.5) 50%,transparent 62%);background-size:300% 100%}
+.content{display:flex;flex-direction:column;gap:20px}
+.spark-layer{position:fixed;inset:0;pointer-events:none;z-index:30;overflow:hidden}
+.spark{position:absolute;width:var(--s);height:var(--s);margin:calc(var(--s) / -2) 0 0 calc(var(--s) / -2);border-radius:50%;
+  background:radial-gradient(circle,#fff6d8 0%,#f3d58f 35%,rgba(243,213,143,0) 70%)}
+.spark.star{background:none;border-radius:0;color:#f6e3b8;font-size:var(--s);line-height:1;text-shadow:0 0 6px #f3d58f,0 0 12px rgba(243,213,143,.7)}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .spark-layer{display:none}}
 </style>
-
 </head>
-<body>
-<div class="wrap">
-  <header>
-    <div class="eyebrow">Youth Mobility Scheme · 1 year</div>
-    <h1>イギリス ワーホリ<br>出発前チェックリスト</h1>
-    <p class="lead">終わったものにチェックを入れていってください。チェックはこのブラウザに保存されるので、閉じても残ります。</p>
-  </header>
+<body class="on-home">
+<div class="bg" aria-hidden="true"></div>
+<div class="bg-sharp" aria-hidden="true"></div>
 
-  <div class="progress" aria-live="polite">
-    <div class="progress-row"><strong id="progressLabel">ぜんぶで 0 / 0</strong><span class="progress-right"><span class="count" id="progressPct">0%</span><button type="button" class="menu-btn" id="menuBtn" aria-label="目次を開く" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button></span></div>
-    <div class="bar"><span id="progressBar"></span></div>
+<a class="back" href="#" id="backBtn"><span>‹</span>目次</a>
+
+<!-- ===== 目次 ===== -->
+<section class="view home" id="v-home" data-view="home">
+  <div class="hero">
+    <span class="sub">UK Working Holiday</span>
+    <h1>みぱの英国手帖</h1>
+    <span class="meta">TOKYO ✈︎ LONDON · MMXXVI</span>
+    <div class="orn" aria-hidden="true">✦</div>
+    <div class="clock" aria-label="今の時刻"><span>LONDON<b data-clock="Europe/London">--:--</b></span><span>TOKYO<b data-clock="Asia/Tokyo">--:--</b></span></div>
+    <div class="daycount" data-daycount hidden></div>
   </div>
+  <ul class="toc">
+    <li><a class="strip" href="#before" style="--i:0"><span class="shine"></span><span class="main"><span class="k">DEPARTURE</span><span class="t">出発前チェックリスト</span></span><span class="side"><b data-count="before">0/0</b><small>READY</small></span></a></li>
+    <li><a class="strip" href="#arrival" style="--i:1"><span class="shine"></span><span class="main"><span class="k">ARRIVAL DAY</span><span class="t">到着した日の流れ</span></span><span class="side"><span class="arr">›</span></span></a></li>
+    <li><a class="strip" href="#after" style="--i:2"><span class="shine"></span><span class="main"><span class="k">SETTLING IN</span><span class="t">着いてからやること</span></span><span class="side"><b data-count="after">0/0</b><small>READY</small></span></a></li>
+    <li><a class="strip" href="#help" style="--i:3"><span class="shine"></span><span class="main"><span class="k">HELP DESK</span><span class="t">困ったときは</span></span><span class="side"><span class="arr">›</span></span></a></li>
+    <li><a class="strip" href="#contacts" style="--i:4"><span class="shine"></span><span class="main"><span class="k">EMERGENCY</span><span class="t">緊急連絡先</span></span><span class="side"><span class="arr">›</span></span></a></li>
+    <li><a class="strip" href="#homesick" style="--i:5"><span class="shine"></span><span class="main"><span class="k">TEA TIME</span><span class="t">寂しくなったとき</span></span><span class="side"><span class="arr">›</span></span></a></li>
+  </ul>
+  <div class="orn more-orn" aria-hidden="true">✦</div>
+  <ul class="tiles">
+    <li><a class="tile" href="#phrases" style="--i:6"><span class="k">SHOW &amp; TELL</span><span class="t">見せる英語カード</span></a></li>
+    <li><a class="tile" href="#tips" style="--i:7"><span class="k">GOOD TO KNOW</span><span class="t">日本とちがうところ</span></a></li>
+    <li><a class="tile" href="#tools" style="--i:8"><span class="k">HANDY TOOLS</span><span class="t">便利ツール</span></a></li>
+    <li><a class="tile" href="#wish" style="--i:9"><span class="k">WISH LIST</span><span class="t">やりたいことリスト</span></a></li>
+  </ul>
+  <p class="foot">チェックとメモは、このiPhoneの中に保存されます</p>
+</section>
 
-  <section data-sec="before">
-    <div class="sec-head"><span class="tag before">日本でしかできない</span><h2>出発前に必ず</h2><span class="sec-count"></span></div>
+<!-- ===== 出発前チェックリスト ===== -->
+<section class="view" id="v-before" data-view="before" hidden>
+  <header class="tk has-stub">
+    <span class="shine"></span>
+    <div class="body">
+      <div class="top"><span>BOARDING PASS</span><span>DEPARTURE</span></div>
+      <span class="s">Before you fly</span>
+      <h2>出発前チェックリスト</h2>
+      <div class="orn" aria-hidden="true">✦</div>
+      <div class="fields"><div>FROM<b>東京</b></div><div>TO<b>ロンドン</b></div><div>PASSENGER<b>みぱ</b></div></div>
+    </div>
+  </header>
+  <div class="stub" data-stub="before"><span class="stub-lab">READY</span><div class="bar"><span></span></div><strong class="stub-count">0/0</strong></div>
 
+  <div class="content">
     <div class="group">
       <h3>ビザ</h3>
       <label class="item"><input type="checkbox" id="v1"><span class="txt"><span class="t">eVisa（電子ビザ）が表示されるか確認</span><span class="d">今は紙のカード（BRP）ではなくオンラインのeVisa。UKVIアカウントにログインしてビザが出るか見る。</span></span></label>
@@ -184,10 +356,104 @@ h2{font-family:var(--f-display);font-size:21px;font-weight:700;margin:0;flex:1;m
       <label class="item"><input type="checkbox" id="b5"><span class="txt"><span class="t">ホストファミリーの情報を確認</span><span class="d">住所・電話番号・家族の名前をスマホと紙にメモ（入国審査で滞在先を聞かれることがある）。到着日時と空港からの行き方を先方と確認しておく。</span></span></label>
       <label class="item"><input type="checkbox" id="b6"><span class="txt"><span class="t">ホストファミリーへのお土産</span><span class="d">日本のお菓子や小物など、かさばらない物を。</span></span></label>
     </div>
-  </section>
 
-  <section data-sec="after">
-    <div class="sec-head"><span class="tag after">現地で</span><h2>着いてからやること</h2><span class="sec-count"></span></div>
+    <aside class="notice">
+      <h3>⚠ 気をつけること</h3>
+      <ul>
+        <li>ビザ・eVisa・NI番号の手続きはときどき変わります。最新は公式サイト <a href="https://www.gov.uk/" target="_blank" rel="noopener">gov.uk</a> で確認してください。</li>
+        <li>海外旅行保険は、NHSで足りない部分（歯科、持ち物の盗難、日本への緊急帰国）の備えに入っておくと安心です。</li>
+      </ul>
+    </aside>
+
+    <div class="reset"><button type="button" data-reset="before">このページのチェックを外す</button><span></span></div>
+  </div>
+</section>
+
+<!-- ===== 到着した日の流れ ===== -->
+<section class="view" id="v-arrival" data-view="arrival" hidden>
+  <header class="tk">
+    <span class="shine"></span>
+    <div class="body">
+      <div class="top"><span>ARRIVAL DAY</span><span>STEP BY STEP</span></div>
+      <span class="s">One step at a time</span>
+      <h2>到着した日の流れ</h2>
+      <div class="orn" aria-hidden="true">✦</div>
+      <div class="fields"><div>手元に用意<b>パスポート・ビザ許可メール・滞在先の住所</b></div></div>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="card step"><span class="n">1</span><div>
+      <h3>飛行機を降りる</h3>
+      <ul>
+        <li>「Arrivals（到着）」の表示にそって、人の流れについて行けば大丈夫</li>
+        <li>イギリスは入国カードが廃止されているので、機内で書く紙はなし</li>
+      </ul>
+    </div></div>
+    <div class="card step"><span class="n">2</span><div>
+      <h3>入国審査（UK Border）</h3>
+      <ul>
+        <li>日本のパスポートは、自動ゲート（eGate）を使えることが多い。パスポートを機械にかざして、カメラを見るだけ</li>
+        <li>係員の窓口になったら、聞かれるのはだいたいこの3つ</li>
+      </ul>
+      <dl class="qa">
+        <dt>What is the purpose of your visit?<small>来た目的は？</small></dt><dd>I'm here on a Youth Mobility Scheme visa.</dd>
+        <dt>How long will you stay?<small>どのくらいいますか？</small></dt><dd>One year.</dd>
+        <dt>Where will you stay?<small>どこに泊まりますか？</small></dt><dd>With a host family.（住所を見せる）</dd>
+      </dl>
+    </div></div>
+    <div class="card step"><span class="n">3</span><div>
+      <h3>荷物を受け取る（Baggage Reclaim）</h3>
+      <ul>
+        <li>画面で自分の便名を探して、そのレーンで待つ</li>
+        <li>出てこなかったら、近くの「Baggage Services」のカウンターへ。搭乗券の荷物タグの控えを見せる</li>
+      </ul>
+    </div></div>
+    <div class="card step"><span class="n">4</span><div>
+      <h3>税関（Customs）</h3>
+      <ul><li>申告するものがなければ、緑の「Nothing to declare」をそのまま通り抜ける</li></ul>
+    </div></div>
+    <div class="card step"><span class="n">5</span><div>
+      <h3>到着ロビーでひと息</h3>
+      <ul>
+        <li>空港の無料Wi-Fiにつないで、家族とホストファミリーに「着いたよ」と連絡</li>
+        <li>SIMは空港でも買える（街のお店のほうが安いことが多い）</li>
+      </ul>
+    </div></div>
+    <div class="card step"><span class="n">6</span><div>
+      <h3>ホストファミリーの家へ</h3>
+      <ul>
+        <li>迎えに来てもらえるのか、自分で行くのかは出発前に確認しておく</li>
+        <li>ロンドンの電車・地下鉄は、タッチ決済のカードやスマホで改札を通れる（入るときと出るときに同じものをタッチ）</li>
+        <li>荷物が多くて不安なら、タクシーや配車アプリでもOK。住所は「見せる英語カード」で見せられる</li>
+      </ul>
+    </div></div>
+    <div class="card step"><span class="n">7</span><div>
+      <h3>家に着いたら</h3>
+      <ul>
+        <li>あいさつして、お土産を渡す</li>
+        <li>Wi-Fiのパスワードと、家のルール（シャワー・洗濯・食事の時間など）を聞いておく</li>
+        <li>時差ぼけ対策に、初日はできるだけ夜まで起きている</li>
+      </ul>
+    </div></div>
+  </div>
+</section>
+
+<!-- ===== 着いてからやること ===== -->
+<section class="view" id="v-after" data-view="after" hidden>
+  <header class="tk has-stub">
+    <span class="shine"></span>
+    <div class="body">
+      <div class="top"><span>SETTLING IN</span><span>LONDON</span></div>
+      <span class="s">Welcome to London</span>
+      <h2>着いてからやること</h2>
+      <div class="orn" aria-hidden="true">✦</div>
+      <div class="fields"><div>CITY<b>ロンドン</b></div><div>STAY<b>一年間</b></div><div>PASSENGER<b>みぱ</b></div></div>
+    </div>
+  </header>
+  <div class="stub" data-stub="after"><span class="stub-lab">READY</span><div class="bar"><span></span></div><strong class="stub-count">0/0</strong></div>
+
+  <div class="content">
     <p class="sec-note">上から順にやるとスムーズです（SIM → 銀行 → NI番号 …）。</p>
     <div class="group">
       <label class="item"><input type="checkbox" id="a1"><span class="txt"><span class="t">SIMカード</span><span class="d">日本でeSIMを買っておくか、空港・街中でgiffgaff・Three・Voxiなどを契約。</span></span></label>
@@ -197,29 +463,33 @@ h2{font-family:var(--f-display);font-size:21px;font-weight:700;margin:0;flex:1;m
       <label class="item"><input type="checkbox" id="a5"><span class="txt"><span class="t">シェアコードを発行</span><span class="d">雇い主に働く資格を見せるときに使う。UKVIアカウントから出せる。</span></span></label>
       <label class="item"><input type="checkbox" id="a6"><span class="txt"><span class="t">在留届を出す</span><span class="d">3か月以上いるなら日本大使館への届け出が義務。オンラインの「ORRネット」で出せる。</span></span></label>
     </div>
-  </section>
+    <div class="reset"><button type="button" data-reset="after">このページのチェックを外す</button><span></span></div>
+  </div>
+</section>
 
-  <aside class="notice">
-    <h2>⚠ 気をつけること</h2>
-    <ul>
-      <li>ビザ・eVisa・NI番号の手続きはときどき変わります。最新は公式サイト <a href="https://www.gov.uk/" target="_blank" rel="noopener">gov.uk</a> で確認してください。</li>
-      <li>海外旅行保険は、NHSで足りない部分（歯科、持ち物の盗難、日本への緊急帰国）の備えに入っておくと安心です。</li>
-    </ul>
-  </aside>
+<!-- ===== 困ったときは ===== -->
+<section class="view" id="v-help" data-view="help" hidden>
+  <header class="tk">
+    <span class="shine"></span>
+    <div class="body">
+      <div class="top"><span>HELP DESK</span><span>ANY TIME</span></div>
+      <span class="s">Don't panic</span>
+      <h2>困ったときは</h2>
+      <div class="orn" aria-hidden="true">✦</div>
+      <div class="fields"><div>MEDICAL<b>999 · 111</b></div><div>LOST · STOLEN<b>警察 101</b></div></div>
+    </div>
+  </header>
 
-  <section class="info" id="help" data-menu="困ったときは">
-    <div class="sec-head"><span class="tag help">もしものとき</span><h2>困ったときは</h2></div>
-
+  <div class="content">
     <div class="card">
       <h3>体調が悪い</h3>
       <ul>
         <li><b>命に関わる・大けが</b> → <span class="mono">999</span> に電話（救急車）。救急外来は「A&amp;E」</li>
         <li><b>急ぎか分からない</b> → <span class="mono">111</span>（NHSの医療相談）。電話かNHSのサイトで</li>
-        <li><b>風邪・軽いけが</b> → 薬局（Pharmacy）で相談できる</li>
+        <li><b>風邪・軽いけが</b> → 薬局（Pharmacy）へ。「Boots（ブーツ）」や「Superdrug（スーパードラッグ）」などのチェーン店で、薬剤師に予約なしで相談できる</li>
         <li><b>ふだんの病気</b> → 登録したGP（かかりつけ医）を予約</li>
       </ul>
     </div>
-
     <div class="card">
       <h3>パスポートを失くした</h3>
       <ul>
@@ -228,7 +498,6 @@ h2{font-family:var(--f-display);font-size:21px;font-weight:700;margin:0;flex:1;m
         <li>新しいパスポートになったら、UKVIアカウントでeVisaの登録を更新</li>
       </ul>
     </div>
-
     <div class="card">
       <h3>カード・スマホを盗まれた</h3>
       <ul>
@@ -237,7 +506,6 @@ h2{font-family:var(--f-display);font-size:21px;font-weight:700;margin:0;flex:1;m
         <li>警察に届ける（急ぎでなければ <span class="mono">101</span> かオンライン）。保険の請求に受理番号が要る</li>
       </ul>
     </div>
-
     <div class="card">
       <h3>ホストファミリー・家・仕事のトラブル</h3>
       <ul>
@@ -246,163 +514,529 @@ h2{font-family:var(--f-display);font-size:21px;font-weight:700;margin:0;flex:1;m
         <li>給料が払われない・契約と違うときは、やりとりを記録に残しておく</li>
       </ul>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="info" id="contacts" data-menu="緊急連絡先">
-    <div class="sec-head"><span class="tag help">もしものとき</span><h2>緊急連絡先</h2></div>
-    <div class="numbers">
-      <div class="num urgent"><b>999</b><span class="t">警察・消防・救急</span><span class="d">命に関わるとき。112でもつながる</span></div>
-      <div class="num"><b>111</b><span class="t">NHS 医療相談</span><span class="d">急ぎか分からない体調不良</span></div>
-      <div class="num"><b>101</b><span class="t">警察（急ぎでない）</span><span class="d">盗難の届け出など</span></div>
+<!-- ===== 緊急連絡先 ===== -->
+<section class="view" id="v-contacts" data-view="contacts" hidden>
+  <header class="tk">
+    <span class="shine"></span>
+    <div class="body">
+      <div class="top"><span>EMERGENCY</span><span>24 HOURS</span></div>
+      <span class="s">Keep this close</span>
+      <h2>緊急連絡先</h2>
+      <div class="orn" aria-hidden="true">✦</div>
+      <div class="fields"><div>POLICE · FIRE · AMBULANCE<b>999</b></div><div>NHS<b>111</b></div></div>
     </div>
+  </header>
+
+  <div class="content">
+    <div class="numbers">
+      <div class="num urgent"><b>999</b><span class="t">警察・消防・救急</span><span class="d">命に関わるとき。112でもつながる</span><a class="tel" href="tel:999">電話する</a></div>
+      <div class="num"><b>111</b><span class="t">NHS 医療相談</span><span class="d">急ぎか分からない体調不良</span><a class="tel" href="tel:111">電話する</a></div>
+      <div class="num"><b>101</b><span class="t">警察（急ぎでない）</span><span class="d">盗難の届け出など</span><a class="tel" href="tel:101">電話する</a></div>
+    </div>
+    <p class="sec-note">「電話する」を押すと、かける前に確認の画面が出ます。イギリスのSIMが入っているときに使えます。</p>
     <div class="card">
       <h3>在英国日本国大使館（領事部）</h3>
       <p><span class="mono">+44 (0)20 7465 6500</span></p>
+      <a class="tel" href="tel:+442074656500">大使館に電話する</a>
       <p class="d">101-104 Piccadilly, London W1J 7JT<br>パスポートの紛失、事件・事故に巻き込まれたときの相談先。最新の受付時間は大使館のサイトで確認。</p>
     </div>
     <div class="card memo">
       <h3>自分の連絡先メモ</h3>
-      <p class="d">書いた内容はこのブラウザに保存されます。</p>
+      <p class="d">書いた内容はこのiPhoneに保存されます。</p>
       <label for="c-host">ホストファミリー</label><input id="c-host" type="text" placeholder="名前・電話番号・住所">
       <label for="c-family">日本の家族</label><input id="c-family" type="text" placeholder="名前・電話番号">
       <label for="c-card">カード会社の紛失・盗難窓口</label><input id="c-card" type="text" placeholder="カードの裏面に書いてある海外用の番号">
       <label for="c-ins">海外旅行保険の窓口</label><input id="c-ins" type="text" placeholder="保険証券に書いてある番号・証券番号">
       <label for="c-agent">学校・エージェント</label><input id="c-agent" type="text" placeholder="担当者名・電話番号">
     </div>
-  </section>
-
-  <section class="info" id="homesick" data-menu="寂しくなったとき">
-    <div class="sec-head"><span class="tag help">もしものとき</span><h2>寂しくなったとき</h2></div>
-    <div class="card">
-      <h3>それは普通のことです</h3>
-      <p>最初の1〜3か月はホームシックになりやすい時期です。イギリスの冬は16時ごろに暗くなるので、気分が落ち込みやすくもなります。</p>
-    </div>
-    <div class="card">
-      <h3>気持ちが少し楽になること</h3>
-      <ul>
-        <li>明るいうちに外を歩く。冬は日光が足りないので、NHSも10〜3月はビタミンDのサプリをすすめている</li>
-        <li>起きる時間・寝る時間を決めて、生活のリズムを作る</li>
-        <li>日本食を作る・食べに行く。ロンドンには日本の食材店や和食のお店がある</li>
-        <li>日本人のコミュニティや、趣味のサークル・スポーツに参加してみる</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>日本に電話するなら</h3>
-      <p>日本はイギリスより<b>9時間</b>進んでいます（3月末〜10月末のサマータイム中は8時間）。</p>
-      <p class="d">例：イギリスの夜9時 ＝ 日本の朝6時（冬）。日本の夜9時に話したいなら、イギリスの昼12時ごろ。</p>
-    </div>
-    <div class="card">
-      <h3>つらさが続くとき</h3>
-      <ul>
-        <li>家族や友だちに「ちょっとしんどい」と連絡してみる</li>
-        <li>眠れない・食べられない日が続くなら、GPに相談できる</li>
-        <li>誰かに話を聞いてほしいとき：Samaritans <span class="mono">116 123</span>（24時間・無料・英語）</li>
-      </ul>
-    </div>
-  </section>
-
-  <div class="reset">
-    <button type="button" id="resetBtn">チェックをすべて外す</button>
-    <span id="resetHint"></span>
   </div>
-</div>
+</section>
 
-<div class="scrim" id="scrim" hidden></div>
-<nav class="drawer" id="drawer" aria-label="目次" hidden>
-  <div class="drawer-head"><strong>目次</strong><button type="button" class="close-btn" id="closeMenu" aria-label="目次を閉じる">×</button></div>
-  <ul id="menuList"></ul>
-</nav>
+<!-- ===== 寂しくなったとき ===== -->
+<section class="view" id="v-homesick" data-view="homesick" hidden>
+  <header class="tk">
+    <span class="shine"></span>
+    <div class="body">
+      <div class="top"><span>TEA TIME</span><span>WITH LOVE</span></div>
+      <span class="s">You're never alone</span>
+      <h2>寂しくなったとき</h2>
+      <div class="orn" aria-hidden="true">✦</div>
+      <div class="fields"><div>TIME DIFFERENCE<b>日本が9時間先</b></div><div>SAMARITANS<b>116 123</b></div></div>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="card">
+      <h3>寂しくなるのは、ふつうのことだよ</h3>
+      <p>最初の1〜3か月は、だれでもホームシックになりやすい時期なんだって。それにイギリスの冬は16時ごろには暗くなっちゃうから、気持ちが沈むのも当たり前。みぱが弱いからじゃないよ。</p>
+    </div>
+    <div class="card">
+      <h3>ちょっと元気が出るかもしれないこと</h3>
+      <ul>
+        <li>明るいうちに、少しだけ外を歩いてみて。冬は日光が足りないから、NHSも10〜3月はビタミンDのサプリをすすめてるよ</li>
+        <li>寝る時間と起きる時間をなんとなく決めておくと、気持ちが落ち着きやすいみたい</li>
+        <li>日本のごはんを食べよう。ロンドンには日本の食材のお店も和食屋さんもあるから、たまには思いっきり甘えて</li>
+        <li>日本人の集まりや、趣味のサークルにちょっと顔を出してみるのもあり。話せる人がひとりいるだけで、全然ちがうよ</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>声が聞きたくなったら</h3>
+      <p>日本はイギリスより<b>9時間</b>進んでるよ（3月末〜10月末のサマータイム中は8時間）。</p>
+      <p>たとえば、そっちの夜9時は、日本だと次の日の朝6時くらい。</p>
+      <p>時間なんて気にしないで、いつでも連絡してね。</p>
+    </div>
+    <div class="card">
+      <h3>しんどい日が続いたら</h3>
+      <ul>
+        <li>「ちょっとしんどい」って一言だけでいいから、送ってね</li>
+        <li>眠れない・食べられない日が続くときは、GPに相談できるよ。がまんしなくていいからね</li>
+        <li>夜中でも誰かに聞いてほしいときは、Samaritans <span class="mono">116 123</span>（24時間・無料・英語）があるよ</li>
+      </ul>
+      <a class="tel" href="tel:116123">Samaritansに電話する</a>
+    </div>
+    <div class="card letter">
+      <h3>さいごに</h3>
+      <p>知らない国で1年間がんばろうって決めた時点で、みぱはもう十分すごいよ。</p>
+      <p>疲れたら休んでいいし、帰りたくなったら帰ってきてもいい。どんなときも、ずっと味方だからね。</p>    </div>
+  </div>
+</section>
+
+<!-- ===== 見せる英語カード ===== -->
+<section class="view" id="v-phrases" data-view="phrases" hidden>
+  <header class="tk">
+    <span class="shine"></span>
+    <div class="body">
+      <div class="top"><span>SHOW &amp; TELL</span><span>ENGLISH</span></div>
+      <span class="s">Just show the screen</span>
+      <h2>見せる英語カード</h2>
+      <div class="orn" aria-hidden="true">✦</div>
+      <div class="fields"><div>使い方<b>押すと大きく表示 → 相手に見せる</b></div></div>
+    </div>
+  </header>
+
+  <div class="content">
+    <p class="sec-note">とっさに英語が出てこないときは、カードを押して、画面を相手に見せてください。</p>
+
+    <div class="plist">
+      <button type="button" class="phrase" data-address="1" data-en="Could you take me to this address, please?"><span class="jp">この住所まで行きたいです</span><span class="en">Could you take me to this address, please?</span><span class="hint">ホストファミリーのメモ（緊急連絡先のページ）も一緒に表示されます</span></button>
+      <button type="button" class="phrase" data-en="I don't feel well. Could you help me, please?"><span class="jp">具合が悪いです。助けてください</span><span class="en">I don't feel well. Could you help me, please?</span></button>
+      <button type="button" class="phrase" data-en="Please call an ambulance."><span class="jp">救急車を呼んでください</span><span class="en">Please call an ambulance.</span></button>
+      <button type="button" class="phrase" data-en="I'm lost. Could you show me where I am on this map?"><span class="jp">道に迷いました。地図で今いる場所を教えてください</span><span class="en">I'm lost. Could you show me where I am on this map?</span></button>
+      <button type="button" class="phrase" data-en="Could you speak more slowly, please?"><span class="jp">もう少しゆっくり話してもらえますか</span><span class="en">Could you speak more slowly, please?</span></button>
+      <button type="button" class="phrase" data-en="Sorry, could you say that again?"><span class="jp">もう一度言ってもらえますか</span><span class="en">Sorry, could you say that again?</span></button>
+      <button type="button" class="phrase" data-en="Could you write it down for me, please?"><span class="jp">書いてもらえますか</span><span class="en">Could you write it down for me, please?</span></button>
+      <button type="button" class="phrase" data-en="I'm from Japan and still learning English."><span class="jp">日本から来ました。英語は勉強中です</span><span class="en">I'm from Japan and still learning English.</span></button>
+      <button type="button" class="phrase" data-en="Excuse me, where is the toilet?"><span class="jp">トイレはどこですか</span><span class="en">Excuse me, where is the toilet?</span></button>
+      <button type="button" class="phrase" data-en="My phone has been stolen. Could you help me?"><span class="jp">スマホを盗まれました。助けてください</span><span class="en">My phone has been stolen. Could you help me?</span></button>
+      <button type="button" class="phrase" data-en="My wallet has been stolen. Could you help me?"><span class="jp">財布を盗まれました。助けてください</span><span class="en">My wallet has been stolen. Could you help me?</span></button>
+    </div>
+
+    <div class="card">
+      <h3>薬局・病院で症状を伝える</h3>
+      <p class="d">押すと大きく表示されます。</p>
+      <div class="chips">
+        <button type="button" class="chip" data-en="I have a headache." data-jp="頭が痛い">頭が痛い</button>
+        <button type="button" class="chip" data-en="I have a fever." data-jp="熱がある">熱がある</button>
+        <button type="button" class="chip" data-en="I have a sore throat." data-jp="喉が痛い">喉が痛い</button>
+        <button type="button" class="chip" data-en="I have a cough." data-jp="咳が出る">咳が出る</button>
+        <button type="button" class="chip" data-en="I have a stomach ache." data-jp="お腹が痛い">お腹が痛い</button>
+        <button type="button" class="chip" data-en="I feel sick." data-jp="吐き気がする">吐き気がする</button>
+        <button type="button" class="chip" data-en="I have diarrhoea." data-jp="下痢をしている">下痢をしている</button>
+        <button type="button" class="chip" data-en="I feel dizzy." data-jp="めまいがする">めまいがする</button>
+        <button type="button" class="chip" data-en="I have a rash." data-jp="発疹が出た">発疹が出た</button>
+        <button type="button" class="chip" data-en="I have a toothache." data-jp="歯が痛い">歯が痛い</button>
+        <button type="button" class="chip" data-en="I have period pain." data-jp="生理痛がある">生理痛がある</button>
+        <button type="button" class="chip" data-en="I hurt my ankle." data-jp="足首をけがした">足首をけがした</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 日本とちがうところ ===== -->
+<section class="view" id="v-tips" data-view="tips" hidden>
+  <header class="tk">
+    <span class="shine"></span>
+    <div class="body">
+      <div class="top"><span>GOOD TO KNOW</span><span>DAILY LIFE</span></div>
+      <span class="s">Little differences</span>
+      <h2>日本とちがうところ</h2>
+      <div class="orn" aria-hidden="true">✦</div>
+      <div class="fields"><div>知っておくと<b>最初の1週間がぐっと楽になる</b></div></div>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="card">
+      <h3>街・建物</h3>
+      <ul>
+        <li><b>階の数え方</b>：日本の1階は「Ground floor（G）」。「First floor」は日本の2階</li>
+        <li><b>道路</b>：車は日本と同じ左側通行。横断歩道の地面に「LOOK RIGHT（右を見て）」などと書いてある</li>
+        <li><b>水道水</b>：そのまま飲める。レストランで「Tap water, please」と言えば無料の水が出る</li>
+        <li><b>日付の書き方</b>：日／月／年の順。「5/12/2026」は12月5日</li>
+        <li><b>祝日</b>：「Bank Holiday」と呼ぶ。お店や交通が休日ダイヤになる</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>お店・レストラン</h3>
+      <ul>
+        <li><b>支払い</b>：ほぼどこでもカードのタッチ決済。現金が使えないお店もある</li>
+        <li><b>日曜日</b>：大きなお店は営業時間が短い（昼前〜夕方まで）</li>
+        <li><b>チップ</b>：レストランは会計に「Service charge」（12.5%前後）が入っていることが多く、その場合は追加不要。カフェやパブは不要</li>
+        <li><b>パブ</b>：席に座って待たず、カウンターで注文して先に払う</li>
+        <li><b>市販の薬</b>：痛み止め・熱さましは「Paracetamol」か「Ibuprofen」。スーパーでも買える</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>交通（ロンドン）</h3>
+      <ul>
+        <li><b>乗るときに使うもの</b>：Suicaのような交通系ICで乗る人は少なく、<b>ふつうのカードのタッチ決済</b>で乗るのが一般的。日本のSuica・PASMOは使えない</li>
+        <li><b>着いてすぐは</b>：日本のVisaかMastercardで、タッチ決済のマークがついたカードで乗れる（JCBは使えないことがある）。海外事務手数料（2〜3%ほど）がかかることが多い</li>
+        <li><b>現地の口座ができたら</b>：MonzoやRevolutのカードに切り替えると手数料なし。スマホのApple Pay・Google Payに入れてもOK（iPhoneは「エクスプレスカード」に設定すると、ロック解除なしで改札を通れる）</li>
+        <li><b>Oyster（オイスター）カード</b>：ロンドンの交通用ICカード。駅で買えるがカード代£7かかる。運賃はタッチ決済と同じなので、なくても大丈夫</li>
+        <li><b>運賃の上限</b>：1日・1週間に使う金額に上限があり、それ以上は請求されない。ただし<b>毎回同じカード（同じスマホ）</b>でタッチしたときだけ</li>
+        <li><b>地下鉄・電車</b>：入るときと出るときに、同じカード（かスマホ）をタッチ。違うものをタッチすると高くつく</li>
+        <li><b>バス</b>：乗るときだけタッチ。現金は使えない</li>
+        <li><b>エスカレーター</b>：右に立って、左をあける</li>
+        <li><b>距離の単位</b>：マイル（1マイル＝約1.6km）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>人との付き合い</h3>
+      <ul>
+        <li><b>連絡手段</b>：LINEではなく「WhatsApp」が主流。ホストファミリーや友だちとの連絡に使う</li>
+        <li><b>列（Queue）</b>：順番をきちんと守る文化。割り込みはとても嫌がられる</li>
+        <li><b>「You all right?」</b>：「元気？」というあいさつ。「Yeah, good, thanks. You?」で返せばOK</li>
+        <li><b>「Cheers」</b>：乾杯だけでなく、「ありがとう」の意味でよく使う</li>
+        <li><b>「Sorry」</b>：ぶつかりそうなとき、道をあけてほしいときなど、とにかくよく言う</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>入れておくと便利なアプリ</h3>
+      <ul>
+        <li><b>Citymapper</b>：ロンドンの乗り換え案内。バスも地下鉄も分かりやすい</li>
+        <li><b>Google マップ</b>：ロンドンの地図を保存しておくと、電波がなくても見られる</li>
+        <li><b>WhatsApp</b>：連絡用。日本にいるうちに登録しておくと楽</li>
+        <li><b>NHS App</b>：GPに登録したあと、予約や処方の確認に使える</li>
+        <li><b>Trainline</b>：ロンドンの外へ行く電車の予約。早く買うと安い</li>
+        <li><b>Uber・Bolt</b>：配車アプリ。夜遅いときや荷物が多いときに</li>
+        <li><b>Monzo・Revolut・Wise</b>：銀行・送金。アプリで口座が作れる</li>
+        <li><b>Too Good To Go</b>：お店の余った食べ物を安く買える。節約に</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 便利ツール ===== -->
+<section class="view" id="v-tools" data-view="tools" hidden>
+  <header class="tk">
+    <span class="shine"></span>
+    <div class="body">
+      <div class="top"><span>HANDY TOOLS</span><span>POCKET SIZE</span></div>
+      <span class="s">Quick little helpers</span>
+      <h2>便利ツール</h2>
+      <div class="orn" aria-hidden="true">✦</div>
+      <div class="fields"><div>LONDON<b data-clock="Europe/London">--:--</b></div><div>TOKYO<b data-clock="Asia/Tokyo">--:--</b></div></div>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="card">
+      <h3>今の時刻</h3>
+      <div class="clocks">
+        <div><span class="d">ロンドン</span><b data-clock="Europe/London">--:--</b><span class="d" data-clockdate="Europe/London"></span></div>
+        <div><span class="d">日本</span><b data-clock="Asia/Tokyo">--:--</b><span class="d" data-clockdate="Asia/Tokyo"></span></div>
+      </div>
+    </div>
+
+    <div class="card tool">
+      <h3>ポンド → 円</h3>
+      <label for="gbp">ポンド（£）</label>
+      <input id="gbp" type="text" inputmode="decimal" placeholder="例：4.50" autocomplete="off">
+      <p class="result" id="jpyOut">金額を入れると、円でいくらか出ます</p>
+      <div class="quick" id="quick"></div>
+      <label for="rate">1ポンド＝何円で計算するか</label>
+      <input id="rate" type="text" inputmode="decimal" autocomplete="off">
+      <p class="d">最初は目安の数字が入っています。レートは毎日変わるので、ときどき直してください。</p>
+    </div>
+
+    <div class="card tool">
+      <h3>ロンドン◯日目</h3>
+      <label for="arriveDate">イギリスに着く日（着いた日）</label>
+      <input id="arriveDate" type="date">
+      <p class="result" id="dayOut">日付を入れると、目次に「ロンドン生活 ◯日目」と出ます</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== やりたいことリスト ===== -->
+<section class="view" id="v-wish" data-view="wish" hidden>
+  <header class="tk">
+    <span class="shine"></span>
+    <div class="body">
+      <div class="top"><span>WISH LIST</span><span>ONE YEAR</span></div>
+      <span class="s">Things I want to do</span>
+      <h2>やりたいことリスト</h2>
+      <div class="orn" aria-hidden="true">✦</div>
+      <div class="fields"><div>かなえた数<b id="wishCount">0 / 0</b></div></div>
+    </div>
+  </header>
+
+  <div class="content">
+    <form class="card tool" id="wishForm">
+      <label for="wishInput">行きたい場所・やってみたいこと</label>
+      <div class="addrow"><input id="wishInput" type="text" placeholder="例：アフタヌーンティーに行く" autocomplete="off"><button type="submit">追加</button></div>
+      <p class="d">思いつかないときは、下から選んでも足せます。</p>
+      <div class="chips" id="wishIdeas"></div>
+    </form>
+    <div class="group" id="wishList" hidden></div>
+    <p class="sec-note" id="wishEmpty">まだ何もありません。やりたいことを1つ書いてみてください。</p>
+  </div>
+</section>
+
+<!-- 見せる用の大きな表示 -->
+<div class="show" id="show" hidden role="dialog" aria-modal="true" aria-label="相手に見せる画面">
+  <p class="big" id="showEn"></p>
+  <p class="addr" id="showAddr" hidden></p>
+  <p class="jp2" id="showJp"></p>
+  <span class="close">画面を押すと閉じます</span>
+</div>
 
 <script>
 (function(){
-  var KEY='uk-whv-checklist-v1';
+  var VIEWS=['home','before','arrival','after','help','contacts','homesick','phrases','tips','tools','wish'];
+  var KEY='uk-whv-checklist-v1', MKEY='uk-whv-memo-v1';
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- チェックの保存（以前と同じ保存名なので、今までのチェックはそのまま残る） ----
   var boxes=[].slice.call(document.querySelectorAll('.item input'));
   var saved={};
   try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){saved={}}
   boxes.forEach(function(b){b.checked=!!saved[b.id]});
-
   function save(){
     var s={};boxes.forEach(function(b){if(b.checked)s[b.id]=1});
     try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}
   }
+  function countOf(name){
+    var bs=document.querySelectorAll('#v-'+name+' .item input'),n=0;
+    for(var i=0;i<bs.length;i++)if(bs[i].checked)n++;
+    return {n:n,total:bs.length};
+  }
   function render(){
-    var done=0;
-    boxes.forEach(function(b){b.closest('.item').classList.toggle('done',b.checked);if(b.checked)done++});
-    document.querySelectorAll('section[data-sec]').forEach(function(sec){
-      var bs=sec.querySelectorAll('.item input'),n=0;
-      bs.forEach(function(b){if(b.checked)n++});
-      sec.querySelector('.sec-count').textContent=n+' / '+bs.length;
+    boxes.forEach(function(b){b.closest('.item').classList.toggle('done',b.checked)});
+    ['before','after'].forEach(function(name){
+      var c=countOf(name),txt=c.n+'/'+c.total,full=c.n===c.total;
+      var stub=document.querySelector('[data-stub="'+name+'"]');
+      stub.querySelector('.stub-count').textContent=txt;
+      stub.querySelector('.stub-lab').textContent=full?'GO! ✈︎':'READY';
+      stub.querySelector('.bar span').style.width=Math.round(c.n/c.total*100)+'%';
+      var side=document.querySelector('[data-count="'+name+'"]');
+      side.textContent=txt;
+      side.nextElementSibling.textContent=full?'DONE':'READY';
     });
-    var pct=Math.round(done/boxes.length*100);
-    document.getElementById('progressLabel').textContent=(done===boxes.length?'ぜんぶ完了！ いってらっしゃい ':'ぜんぶで ')+done+' / '+boxes.length;
-    document.getElementById('progressPct').textContent=pct+'%';
-    document.getElementById('progressBar').style.width=pct+'%';
-    updateMenu();
   }
-  // 目次（ハンバーガーメニュー）
-  var menuBtn=document.getElementById('menuBtn'),drawer=document.getElementById('drawer'),
-      scrim=document.getElementById('scrim'),closeBtn=document.getElementById('closeMenu'),
-      list=document.getElementById('menuList'),entries=[];
-  function addHeading(label){var li=document.createElement('li');li.className='menu-heading';li.textContent=label;list.appendChild(li)}
-  function addEntry(label,target,sub){
-    var li=document.createElement('li'),b=document.createElement('button'),l=document.createElement('span'),c=document.createElement('span');
-    b.type='button';b.className='menu-item'+(sub?' sub':'');l.textContent=label;c.className='menu-count';
-    b.appendChild(l);b.appendChild(c);li.appendChild(b);list.appendChild(li);
-    b.addEventListener('click',function(){
-      closeMenu(false);
-      var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      target.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'});
-    });
-    entries.push({boxes:target.querySelectorAll('.item input'),count:c});
-  }
-  document.querySelectorAll('section[data-sec]').forEach(function(sec){
-    var title=sec.querySelector('h2').textContent;
-    var named=[].slice.call(sec.querySelectorAll('.group')).filter(function(g){return g.querySelector('h3')});
-    if(named.length){addHeading(title);named.forEach(function(g){addEntry(g.querySelector('h3').textContent,g,true)})}
-    else addEntry(title,sec,false);
-  });
-  var notice=document.querySelector('.notice');
-  if(notice)addEntry('気をつけること',notice,false);
-  var extra=document.querySelectorAll('[data-menu]');
-  if(extra.length){addHeading('もしものとき');extra.forEach(function(el){addEntry(el.getAttribute('data-menu'),el,true)})}
+  boxes.forEach(function(b){b.addEventListener('change',function(){save();render()})});
 
-  // 連絡先メモの保存
-  var MKEY='uk-whv-memo-v1',memo={};
+  // ---- ページごとのリセット（2回押しで実行） ----
+  [].forEach.call(document.querySelectorAll('[data-reset]'),function(btn){
+    var hint=btn.nextElementSibling,armed=false,timer,label=btn.textContent;
+    btn.addEventListener('click',function(){
+      if(!armed){
+        armed=true;btn.classList.add('confirm');btn.textContent='もう一度押すと外します';hint.textContent='';
+        timer=setTimeout(function(){armed=false;btn.classList.remove('confirm');btn.textContent=label},4000);
+        return;
+      }
+      clearTimeout(timer);armed=false;btn.classList.remove('confirm');btn.textContent=label;
+      [].forEach.call(document.querySelectorAll('#v-'+btn.dataset.reset+' .item input'),function(b){b.checked=false});
+      save();render();hint.textContent='外しました';
+    });
+  });
+
+  // ---- 連絡先メモの保存 ----
+  var memo={};
   try{memo=JSON.parse(localStorage.getItem(MKEY)||'{}')||{}}catch(e){memo={}}
-  document.querySelectorAll('.memo input').forEach(function(inp){
+  [].forEach.call(document.querySelectorAll('.memo input'),function(inp){
     if(memo[inp.id])inp.value=memo[inp.id];
     inp.addEventListener('input',function(){memo[inp.id]=inp.value;try{localStorage.setItem(MKEY,JSON.stringify(memo))}catch(e){}});
   });
-  function updateMenu(){
-    entries.forEach(function(e){
-      if(!e.boxes.length){e.count.textContent='';return}
-      var n=0;for(var i=0;i<e.boxes.length;i++)if(e.boxes[i].checked)n++;
-      e.count.textContent=n+' / '+e.boxes.length;e.count.classList.toggle('full',n===e.boxes.length);
+
+  // ---- 画面の切り替え（#before などで各ページへ） ----
+  var current=null,previous=null,first=true;
+  function nameFromHash(){var h=location.hash.replace('#','');return VIEWS.indexOf(h)>0?h:'home'}
+  function show(name){
+    previous=current;current=name;
+    VIEWS.forEach(function(v){document.getElementById('v-'+v).hidden=(v!==name)});
+    document.body.classList.toggle('on-home',name==='home');
+    var view=document.getElementById('v-'+name);
+    window.scrollTo(0,0);
+    if(!reduce&&!first){view.classList.remove('enter');void view.offsetWidth;view.classList.add('enter')}
+    document.title=name==='home'?'みぱの英国手帖':view.querySelector('h2').textContent+'｜みぱの英国手帖';
+    first=false;
+    checkStuck();
+  }
+  window.addEventListener('hashchange',function(){show(nameFromHash())});
+  document.getElementById('backBtn').addEventListener('click',function(e){
+    e.preventDefault();
+    if(previous==='home'&&history.length>1){history.back();return}
+    try{history.replaceState(null,'',location.pathname+location.search)}catch(err){location.hash=''}
+    show('home');
+  });
+
+  // ---- 半券が画面上に貼りついたら形を変える ----
+  function checkStuck(){
+    [].forEach.call(document.querySelectorAll('.stub'),function(s){
+      if(s.offsetParent===null){s.classList.remove('stuck');return}
+      var t=parseFloat(getComputedStyle(s).top)||0;
+      s.classList.toggle('stuck',window.scrollY>0&&s.getBoundingClientRect().top<=t+0.5);
     });
   }
-  function openMenu(){drawer.hidden=false;scrim.hidden=false;menuBtn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';closeBtn.focus()}
-  function closeMenu(refocus){drawer.hidden=true;scrim.hidden=true;menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow='';if(refocus!==false)menuBtn.focus()}
-  menuBtn.addEventListener('click',openMenu);
-  closeBtn.addEventListener('click',function(){closeMenu()});
-  scrim.addEventListener('click',function(){closeMenu()});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!drawer.hidden)closeMenu()});
+  window.addEventListener('scroll',checkStuck,{passive:true});
+  window.addEventListener('resize',checkStuck);
 
-  boxes.forEach(function(b){b.addEventListener('change',function(){save();render()})});
+  // ---- 時計（ロンドンと日本） ----
+  function tick(){
+    var now=new Date();
+    [].forEach.call(document.querySelectorAll('[data-clock]'),function(el){
+      try{el.textContent=new Intl.DateTimeFormat('ja-JP',{timeZone:el.dataset.clock,hour:'2-digit',minute:'2-digit',hour12:false}).format(now)}catch(e){}
+    });
+    [].forEach.call(document.querySelectorAll('[data-clockdate]'),function(el){
+      try{el.textContent=new Intl.DateTimeFormat('ja-JP',{timeZone:el.dataset.clockdate,month:'numeric',day:'numeric',weekday:'short'}).format(now)}catch(e){}
+    });
+  }
+  tick();setInterval(tick,15000);
 
-  var btn=document.getElementById('resetBtn'),hint=document.getElementById('resetHint'),armed=false,timer;
-  btn.addEventListener('click',function(){
-    if(!armed){
-      armed=true;btn.classList.add('confirm');btn.textContent='もう一度押すと外します';
-      hint.textContent='';
-      timer=setTimeout(function(){armed=false;btn.classList.remove('confirm');btn.textContent='チェックをすべて外す'},4000);
-      return;
-    }
-    clearTimeout(timer);armed=false;btn.classList.remove('confirm');btn.textContent='チェックをすべて外す';
-    boxes.forEach(function(b){b.checked=false});save();render();hint.textContent='すべて外しました';
+  // ---- ロンドン◯日目 ----
+  var AKEY='uk-whv-arrive-v1',arriveInput=document.getElementById('arriveDate');
+  function londonToday(){
+    try{return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/London',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
+    catch(e){return new Date().toISOString().slice(0,10)}
+  }
+  function toUTC(s){var p=s.split('-');return Date.UTC(+p[0],+p[1]-1,+p[2])}
+  function renderDays(){
+    var v=arriveInput.value,home=document.querySelector('[data-daycount]'),out=document.getElementById('dayOut');
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(v)){home.hidden=true;out.textContent='日付を入れると、目次に「ロンドン生活 ◯日目」と出ます';return}
+    var diff=Math.round((toUTC(londonToday())-toUTC(v))/86400000);
+    var txt=diff<0?('ロンドン到着まで あと'+(-diff)+'日'):('ロンドン生活 '+(diff+1)+'日目');
+    home.textContent=txt;home.hidden=false;out.textContent=txt;
+  }
+  try{arriveInput.value=localStorage.getItem(AKEY)||''}catch(e){}
+  arriveInput.addEventListener('change',function(){try{localStorage.setItem(AKEY,arriveInput.value)}catch(e){}renderDays()});
+  renderDays();
+
+  // ---- ポンド → 円 ----
+  var RKEY='uk-whv-rate-v1',gbp=document.getElementById('gbp'),rate=document.getElementById('rate');
+  function num(s){var n=parseFloat(String(s).replace(/[^\d.]/g,''));return isFinite(n)?n:NaN}
+  function yen(n){return Math.round(n).toLocaleString('ja-JP')+'円'}
+  function renderMoney(){
+    var r=num(rate.value),g=num(gbp.value),out=document.getElementById('jpyOut'),q=document.getElementById('quick');
+    if(!(r>0)){out.textContent='レートを数字で入れてください';q.textContent='';return}
+    out.textContent=isNaN(g)?'金額を入れると、円でいくらか出ます':('£'+g+' ＝ 約'+yen(g*r));
+    q.textContent='';
+    [1,5,10,20,50,100].forEach(function(v){
+      var s=document.createElement('span'),a=document.createElement('b'),b=document.createElement('span');
+      a.textContent='£'+v;b.textContent='約'+yen(v*r);s.appendChild(a);s.appendChild(b);q.appendChild(s);
+    });
+  }
+  var savedRate='';try{savedRate=localStorage.getItem(RKEY)||''}catch(e){}
+  rate.value=savedRate||'200';
+  rate.addEventListener('input',function(){try{localStorage.setItem(RKEY,rate.value)}catch(e){}renderMoney()});
+  gbp.addEventListener('input',renderMoney);
+  renderMoney();
+
+  // ---- 見せる英語カード（押すと大きく表示） ----
+  var showBox=document.getElementById('show'),showEn=document.getElementById('showEn'),showJp=document.getElementById('showJp'),showAddr=document.getElementById('showAddr');
+  function openShow(en,jp,withAddr){
+    showEn.textContent=en;showJp.textContent=jp;
+    var a=withAddr?(memo['c-host']||'').trim():'';
+    showAddr.textContent=a;showAddr.hidden=!a;
+    showBox.hidden=false;document.body.style.overflow='hidden';
+  }
+  function closeShow(){showBox.hidden=true;document.body.style.overflow=''}
+  showBox.addEventListener('click',closeShow);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!showBox.hidden)closeShow()});
+  [].forEach.call(document.querySelectorAll('.phrase'),function(b){
+    b.addEventListener('click',function(){openShow(b.dataset.en,b.querySelector('.jp').textContent,!!b.dataset.address)});
   });
+  [].forEach.call(document.querySelectorAll('#v-phrases .chip'),function(b){
+    b.addEventListener('click',function(){openShow(b.dataset.en,b.dataset.jp,false)});
+  });
+
+  // ---- やりたいことリスト ----
+  var WKEY='uk-whv-wish-v1',wishes=[];
+  try{wishes=JSON.parse(localStorage.getItem(WKEY)||'[]')||[]}catch(e){wishes=[]}
+  if(!Array.isArray(wishes))wishes=[];
+  var wishList=document.getElementById('wishList'),wishEmpty=document.getElementById('wishEmpty'),wishInput=document.getElementById('wishInput'),wishIdeas=document.getElementById('wishIdeas');
+  var IDEAS=['アフタヌーンティーに行く','ビッグ・ベンを見る','大英博物館に行く','ミュージカルを観る','パブでフィッシュ＆チップス','コッツウォルズに行く','クリスマスマーケットに行く','蚤の市をのぞく'];
+  function saveWish(){try{localStorage.setItem(WKEY,JSON.stringify(wishes))}catch(e){}}
+  function renderWish(){
+    wishList.textContent='';
+    var done=0;
+    wishes.forEach(function(w,i){
+      if(w.done)done++;
+      var row=document.createElement('div');row.className='wrow'+(w.done?' done':'');
+      var cb=document.createElement('input');cb.type='checkbox';cb.checked=!!w.done;cb.setAttribute('aria-label',w.t);
+      cb.addEventListener('change',function(){wishes[i].done=cb.checked;saveWish();renderWish()});
+      var t=document.createElement('span');t.className='wt';t.textContent=w.t;
+      var del=document.createElement('button');del.type='button';del.className='del';del.textContent='×';del.setAttribute('aria-label','「'+w.t+'」を消す');
+      del.addEventListener('click',function(){wishes.splice(i,1);saveWish();renderWish()});
+      row.appendChild(cb);row.appendChild(t);row.appendChild(del);wishList.appendChild(row);
+    });
+    wishList.hidden=!wishes.length;wishEmpty.hidden=!!wishes.length;
+    document.getElementById('wishCount').textContent=done+' / '+wishes.length;
+    wishIdeas.textContent='';
+    IDEAS.filter(function(x){return !wishes.some(function(w){return w.t===x})}).forEach(function(x){
+      var b=document.createElement('button');b.type='button';b.className='chip';b.textContent='＋ '+x;
+      b.addEventListener('click',function(){wishes.push({t:x,done:false});saveWish();renderWish()});
+      wishIdeas.appendChild(b);
+    });
+  }
+  document.getElementById('wishForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=wishInput.value.trim();if(!v)return;
+    wishes.push({t:v,done:false});wishInput.value='';saveWish();renderWish();
+  });
+  renderWish();
+
+  // ---- 電波がなくても開けるようにする（公開ページでのみ動く） ----
+  if('serviceWorker' in navigator&&location.protocol==='https:'){
+    window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
+  }
+
   render();
+  var startName=nameFromHash();
+  if(startName==='home'&&!reduce)document.body.classList.add('intro');
+  show(startName);
+
+  // ---- 開いたとき：目次のまわりに金色の光の粒が舞う ----
+  if(startName==='home'&&!reduce&&document.body.animate){
+    var toc=document.querySelector('.toc');
+    var layer=document.createElement('div');layer.className='spark-layer';layer.setAttribute('aria-hidden','true');
+    document.body.appendChild(layer);
+    setTimeout(function(){
+      var r=toc.getBoundingClientRect();
+      for(var i=0;i<34;i++){
+        var s=document.createElement('span'),star=Math.random()<.45;
+        s.className='spark'+(star?' star':'');
+        if(star)s.textContent='✦';
+        var size=star?(8+Math.random()*10):(6+Math.random()*12);
+        s.style.setProperty('--s',size+'px');
+        s.style.left=(r.left-16+Math.random()*(r.width+32))+'px';
+        s.style.top=(r.top-40+Math.random()*(r.height+60))+'px';
+        layer.appendChild(s);
+        var dy=-(10+Math.random()*30);
+        s.animate([
+          {opacity:0,transform:'scale(0) rotate(0deg)'},
+          {opacity:1,transform:'scale(1.2) rotate(45deg)',offset:.35},
+          {opacity:0,transform:'translateY('+dy+'px) scale(.2) rotate(90deg)'}
+        ],{duration:900+Math.random()*900,delay:Math.random()*1300,easing:'ease-out',fill:'both'});
+      }
+      setTimeout(function(){layer.remove()},3200);
+    },400);
+    setTimeout(function(){document.body.classList.remove('intro')},3500);
+  }
 })();
 </script>
-
 </body>
 </html>
