@@ -186,7 +186,12 @@ body.on-home .back{display:none}
 .phrase:focus-visible,.chip:focus-visible{outline:3px solid var(--gold-light);outline-offset:2px}
 .mylabel{margin:4px 0 -8px;font:700 13px var(--f-serif);letter-spacing:.12em;color:var(--gold-light);text-shadow:0 1px 6px rgba(0,0,0,.6)}
 .mycard{position:relative}
-.mycard .phrase{padding-right:64px}
+.mycard .phrase{padding-right:56px}
+.mycard.has-del .phrase{padding-right:104px}
+.star{position:absolute;top:6px;right:6px;width:44px;height:40px;border:0;border-radius:8px;background:transparent;color:#c9a45c;font-size:24px;line-height:1;cursor:pointer}
+.star.on{color:#c9900c}
+.mycard.has-del .star{right:54px}
+.star:focus-visible{outline:3px solid var(--navy);outline-offset:1px}
 .mycard .del{position:absolute;top:8px;right:8px;min-width:40px;height:36px;padding:0 10px;border:0;border-radius:8px;background:#f4eee4;color:var(--muted);font:700 14px var(--f-body);cursor:pointer}
 .mycard .del.armed{background:var(--red-soft);color:var(--red)}
 .mycard .del:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
@@ -205,6 +210,12 @@ body.on-home .back{display:none}
 /* ===== 電話ボタン・ツール・やりたいこと ===== */
 .tel{display:inline-flex;align-items:center;justify-content:center;gap:6px;align-self:flex-start;margin-top:6px;padding:8px 14px;border-radius:99px;background:var(--tk-1);color:var(--gold-light);font-weight:700;font-size:13px;text-decoration:none;white-space:nowrap}
 .num .tel{align-self:stretch;padding:8px 6px}
+.sitelink{align-self:flex-start;margin-top:4px;color:var(--tk-1);font-weight:700;font-size:14px;text-decoration:underline;text-underline-offset:3px}
+.sitelink:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.ext{display:inline-block;margin-top:2px;font-family:var(--f-mono);font-size:13px;color:var(--tk-1);text-decoration:underline;text-underline-offset:3px;word-break:break-all}
+.ext::after{content:" ↗";font-family:var(--f-body);text-decoration:none}
+.ext:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.card .url{margin-top:-6px;font-family:var(--f-mono);font-size:12px;user-select:all;-webkit-user-select:all}
 .tel:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
 .clocks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .clocks > div{display:flex;flex-direction:column;align-items:center;padding:12px 8px;border-radius:10px;background:#faf5ec}
@@ -292,25 +303,27 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
   <div class="hero">
     <span class="sub">UK Working Holiday</span>
     <h1>みぱの英国手帖</h1>
-    <span class="meta">TOKYO ✈︎ LONDON · MMXXVI</span>
+    <span class="meta">TOKYO ✈︎ OXFORD · MMXXVI</span>
     <div class="orn" aria-hidden="true">✦</div>
-    <div class="clock" aria-label="今の時刻"><span>LONDON<b data-clock="Europe/London">--:--</b></span><span>TOKYO<b data-clock="Asia/Tokyo">--:--</b></span></div>
+    <div class="clock" aria-label="今の時刻"><span>UK<b data-clock="Europe/London">--:--</b></span><span>TOKYO<b data-clock="Asia/Tokyo">--:--</b></span></div>
     <div class="daycount" data-daycount hidden></div>
   </div>
   <ul class="toc">
     <li><a class="strip" href="#before" style="--i:0"><span class="shine"></span><span class="main"><span class="k">DEPARTURE</span><span class="t">出発前チェックリスト</span></span><span class="side"><b data-count="before">0/0</b><small>READY</small></span></a></li>
     <li><a class="strip" href="#arrival" style="--i:1"><span class="shine"></span><span class="main"><span class="k">ARRIVAL DAY</span><span class="t">到着した日の流れ</span></span><span class="side"><span class="arr">›</span></span></a></li>
     <li><a class="strip" href="#after" style="--i:2"><span class="shine"></span><span class="main"><span class="k">SETTLING IN</span><span class="t">着いてからやること</span></span><span class="side"><b data-count="after">0/0</b><small>READY</small></span></a></li>
-    <li><a class="strip" href="#help" style="--i:3"><span class="shine"></span><span class="main"><span class="k">HELP DESK</span><span class="t">困ったときは</span></span><span class="side"><span class="arr">›</span></span></a></li>
-    <li><a class="strip" href="#contacts" style="--i:4"><span class="shine"></span><span class="main"><span class="k">EMERGENCY</span><span class="t">緊急連絡先</span></span><span class="side"><span class="arr">›</span></span></a></li>
-    <li><a class="strip" href="#homesick" style="--i:5"><span class="shine"></span><span class="main"><span class="k">TEA TIME</span><span class="t">寂しくなったとき</span></span><span class="side"><span class="arr">›</span></span></a></li>
+    <li><a class="strip" href="#home-hunt" style="--i:3"><span class="shine"></span><span class="main"><span class="k">HOME HUNTING</span><span class="t">家探しの手順</span></span><span class="side"><span class="arr">›</span></span></a></li>
+    <li><a class="strip" href="#job" style="--i:4"><span class="shine"></span><span class="main"><span class="k">JOB HUNTING</span><span class="t">仕事探しの手順</span></span><span class="side"><span class="arr">›</span></span></a></li>
+    <li><a class="strip" href="#help" style="--i:5"><span class="shine"></span><span class="main"><span class="k">HELP DESK</span><span class="t">困ったときは</span></span><span class="side"><span class="arr">›</span></span></a></li>
+    <li><a class="strip" href="#contacts" style="--i:6"><span class="shine"></span><span class="main"><span class="k">EMERGENCY</span><span class="t">緊急連絡先</span></span><span class="side"><span class="arr">›</span></span></a></li>
+    <li><a class="strip" href="#wish" style="--i:7"><span class="shine"></span><span class="main"><span class="k">WISH LIST</span><span class="t">やりたいことリスト</span></span><span class="side"><span class="arr">›</span></span></a></li>
   </ul>
   <div class="orn more-orn" aria-hidden="true">✦</div>
   <ul class="tiles">
-    <li><a class="tile" href="#phrases" style="--i:6"><span class="k">SHOW &amp; TELL</span><span class="t">見せる英語カード</span></a></li>
-    <li><a class="tile" href="#tips" style="--i:7"><span class="k">GOOD TO KNOW</span><span class="t">日本とちがうところ</span></a></li>
-    <li><a class="tile" href="#tools" style="--i:8"><span class="k">HANDY TOOLS</span><span class="t">便利ツール</span></a></li>
-    <li><a class="tile" href="#wish" style="--i:9"><span class="k">WISH LIST</span><span class="t">やりたいことリスト</span></a></li>
+    <li><a class="tile" href="#phrases" style="--i:8"><span class="k">SHOW &amp; TELL</span><span class="t">見せる英語カード</span></a></li>
+    <li><a class="tile" href="#tips" style="--i:9"><span class="k">GOOD TO KNOW</span><span class="t">日本とちがうところ</span></a></li>
+    <li><a class="tile" href="#tools" style="--i:10"><span class="k">HANDY TOOLS</span><span class="t">便利ツール</span></a></li>
+    <li><a class="tile" href="#homesick" style="--i:11"><span class="k">TEA TIME</span><span class="t">寂しくなったとき</span></a></li>
   </ul>
   <p class="foot">チェックとメモは、このiPhoneの中に保存されます</p>
 </section>
@@ -324,7 +337,7 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
       <span class="s">Before you fly</span>
       <h2>出発前チェックリスト</h2>
       <div class="orn" aria-hidden="true">✦</div>
-      <div class="fields"><div>FROM<b>東京</b></div><div>TO<b>ロンドン</b></div><div>PASSENGER<b>みぱ</b></div></div>
+      <div class="fields"><div>FROM<b>東京</b></div><div>TO<b>オックスフォード</b></div><div>PASSENGER<b>みぱ</b></div></div>
     </div>
   </header>
   <div class="stub" data-stub="before"><span class="stub-lab">READY</span><div class="bar"><span></span></div><strong class="stub-count">0/0</strong></div>
@@ -370,7 +383,7 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
       <label class="item"><input type="checkbox" id="b1"><span class="txt"><span class="t">常用薬＋英文の説明</span><span class="d">医師に英文レターを書いてもらえると安心。</span></span></label>
       <label class="item"><input type="checkbox" id="b2"><span class="txt"><span class="t">英文の履歴書（CV）・卒業証明書・職歴の証明</span><span class="d">仕事探しで使う。</span></span></label>
       <label class="item"><input type="checkbox" id="b3"><span class="txt"><span class="t">変換プラグ（BFタイプ）</span><span class="d">電圧は230V。スマホやPCの充電器はたいていそのまま使える。</span></span></label>
-      <label class="item"><input type="checkbox" id="b4"><span class="txt"><span class="t">防寒着・雨具</span><span class="d">11月下旬のロンドンは最高気温10℃前後で雨が多い。日の入りは16時ごろ。</span></span></label>
+      <label class="item"><input type="checkbox" id="b4"><span class="txt"><span class="t">防寒着・雨具</span><span class="d">11月下旬のオックスフォード周辺は最高気温10℃前後で雨が多い。日の入りは16時ごろ。</span></span></label>
       <label class="item"><input type="checkbox" id="b5"><span class="txt"><span class="t">ホストファミリーの情報を確認</span><span class="d">住所・電話番号・家族の名前をスマホと紙にメモ（入国審査で滞在先を聞かれることがある）。到着日時と空港からの行き方を先方と確認しておく。</span></span></label>
       <label class="item"><input type="checkbox" id="b6"><span class="txt"><span class="t">ホストファミリーへのお土産</span><span class="d">日本のお菓子や小物など、かさばらない物を。</span></span></label>
     </div>
@@ -442,8 +455,9 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
       <h3>ホストファミリーの家へ</h3>
       <ul>
         <li>迎えに来てもらえるのか、自分で行くのかは出発前に確認しておく</li>
-        <li>ロンドンの電車・地下鉄は、タッチ決済のカードやスマホで改札を通れる（入るときと出るときに同じものをタッチ）</li>
-        <li>荷物が多くて不安なら、タクシーや配車アプリでもOK。住所は「見せる英語カード」で見せられる</li>
+        <li>ヒースロー空港からオックスフォードへは、直通バス「The Airline」（Oxford Bus Company）が乗り換えなしで楽。ガトウィック空港からも出ている。最新の時刻と料金は公式サイトの「The Airline」のところで確認<br><a class="ext" href="https://www.oxfordbus.co.uk/" target="_blank" rel="noopener">www.oxfordbus.co.uk</a></li>
+        <li>電車で行く場合は、ロンドン市内の駅（Paddingtonなど）で乗り換えが必要。荷物が多いと大変</li>
+        <li>タクシーや配車アプリも使えるが、空港から距離があるので高め。住所は「見せる英語カード」で見せられる</li>
       </ul>
     </div></div>
     <div class="card step"><span class="n">7</span><div>
@@ -462,17 +476,17 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
   <header class="tk has-stub">
     <span class="shine"></span>
     <div class="body">
-      <div class="top"><span>SETTLING IN</span><span>LONDON</span></div>
-      <span class="s">Welcome to London</span>
+      <div class="top"><span>SETTLING IN</span><span>OXFORD</span></div>
+      <span class="s">Welcome to Oxford</span>
       <h2>着いてからやること</h2>
       <div class="orn" aria-hidden="true">✦</div>
-      <div class="fields"><div>CITY<b>ロンドン</b></div><div>STAY<b>一年間</b></div><div>PASSENGER<b>みぱ</b></div></div>
+      <div class="fields"><div>CITY<b>オックスフォード</b></div><div>STAY<b>一年間</b></div><div>PASSENGER<b>みぱ</b></div></div>
     </div>
   </header>
   <div class="stub" data-stub="after"><span class="stub-lab">READY</span><div class="bar"><span></span></div><strong class="stub-count">0/0</strong></div>
 
   <div class="content">
-    <p class="sec-note">上から順にやるとスムーズです（SIM → 銀行 → NI番号 …）。</p>
+    <p class="sec-note">上から順にやるとスムーズです（SIM → 銀行 → NI番号 …）。ホームステイは1か月なので、家探しも着いた週から始めましょう（目次の「家探しの手順」）。</p>
     <div class="group">
       <label class="item"><input type="checkbox" id="a1"><span class="txt"><span class="t">SIMカード</span><span class="d">日本でeSIMを買っておくか、空港・街中でgiffgaff・Three・Voxiなどを契約。</span></span></label>
       <label class="item"><input type="checkbox" id="a2"><span class="txt"><span class="t">銀行口座を作る</span><span class="d">Monzo・Revolutならアプリで早く作れる。給料の受け取りに必要。</span></span></label>
@@ -482,6 +496,170 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
       <label class="item"><input type="checkbox" id="a6"><span class="txt"><span class="t">在留届を出す</span><span class="d">3か月以上いるなら日本大使館への届け出が義務。オンラインの「ORRネット」で出せる。</span></span></label>
     </div>
     <div class="reset"><button type="button" data-reset="after">このページのチェックを外す</button><span></span></div>
+  </div>
+</section>
+
+<!-- ===== 家探しの手順 ===== -->
+<section class="view" id="v-home-hunt" data-view="home-hunt" hidden>
+  <header class="tk">
+    <span class="shine"></span>
+    <div class="body">
+      <div class="top"><span>HOME HUNTING</span><span>MONTH ONE</span></div>
+      <span class="s">Find your Oxford home</span>
+      <h2>家探しの手順</h2>
+      <div class="orn" aria-hidden="true">✦</div>
+      <div class="fields"><div>ホームステイ<b>1か月</b></div><div>探し始め<b>着いた週から</b></div></div>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="card">
+      <h3>1か月の目安</h3>
+      <ul>
+        <li><b>1〜2週目</b>：サイトで探す・問い合わせる</li>
+        <li><b>2〜3週目</b>：内見（実際に部屋を見に行く）</li>
+        <li><b>3〜4週目</b>：契約・引っ越し</li>
+      </ul>
+      <p class="d">人気の部屋はすぐ埋まるので、着いた週から探し始めると安心です。</p>
+    </div>
+
+    <div class="card step"><span class="n">1</span><div>
+      <h3>予算と住むエリアを決める</h3>
+      <ul>
+        <li>ワーホリでは、シェアハウス（Flatshare）の1部屋を借りる人が多い</li>
+        <li>家賃は場所と部屋で大きく変わるので、まずサイトで相場を見てから予算を決める</li>
+        <li>「Bills included（光熱費・ネット込み）」かどうかで、実際の出費がかなり変わる</li>
+        <li>職場や学校までの交通費も合わせて考える（中心部に近いほど家賃は高い）</li>
+        <li>オックスフォードは大学の街で、イギリスの中でも家賃が高めの地域。大学の新学期（9〜10月）の前後は特に部屋の取り合いになる</li>
+        <li>中心部から少し離れていても、バスで通えるエリアなら候補に入れると選択肢が広がる</li>
+      </ul>
+    </div></div>
+
+    <div class="card step"><span class="n">2</span><div>
+      <h3>サイトで探す</h3>
+      <ul>
+        <li><b>SpareRoom</b>：シェアハウスの部屋探しで一番使われている<br><a class="ext" href="https://www.spareroom.co.uk/" target="_blank" rel="noopener">www.spareroom.co.uk</a></li>
+        <li><b>OpenRent・Rightmove・Zoopla</b>：部屋や家まるごとの物件<br><a class="ext" href="https://www.openrent.co.uk/" target="_blank" rel="noopener">www.openrent.co.uk</a><br><a class="ext" href="https://www.rightmove.co.uk/" target="_blank" rel="noopener">www.rightmove.co.uk</a><br><a class="ext" href="https://www.zoopla.co.uk/" target="_blank" rel="noopener">www.zoopla.co.uk</a></li>
+        <li><b>MixB</b>：日本人向けの掲示板。日本語でやりとりできる（ロンドンの物件が中心）<br><a class="ext" href="https://uk.mixb.net/" target="_blank" rel="noopener">uk.mixb.net</a></li>
+        <li>Facebookの、オックスフォードの部屋探しグループや、イギリスの日本人向けグループ</li>
+      </ul>
+    </div></div>
+
+    <div class="card step"><span class="n">3</span><div>
+      <h3>問い合わせて、内見（Viewing）に行く</h3>
+      <ul>
+        <li>気になる部屋は、すぐにメッセージを送る</li>
+        <li><b>見るところ</b>：カビ・結露、暖房、水回り、騒音、一緒に住む人、駅までの道（夜も）</li>
+        <li><b>聞くこと</b>：家賃に何が含まれるか（光熱費・ネット・Council Tax）、デポジット（敷金）の金額、いつから入れるか、出るときは何か月前に言うか</li>
+      </ul>
+    </div></div>
+
+    <div class="card step"><span class="n">4</span><div>
+      <h3>契約する</h3>
+      <ul>
+        <li>契約書を読んで、<b>全員がサインしてから</b>お金を払う。イングランドでは2026年5月から、サイン前に家賃を払う必要はなく、入居前の前払いは最大1か月分までになった</li>
+        <li>広告の家賃より高い金額を出させる「競り」も禁止されている</li>
+        <li>今の賃貸契約は期限がない形が基本で、自分から出るときは2か月前に伝える</li>
+        <li>デポジット（敷金）は家賃の最大5週間分。大家さんは国の保護制度に預ける決まりがある</li>
+        <li>大家さんはビザ（住む権利）を確認する決まりなので、UKVIアカウントで「Right to Rent」用のシェアコードを出して渡す</li>
+        <li>入居した日に部屋の写真を撮っておく（出るときのトラブル防止）</li>
+      </ul>
+      <p class="d">大家さんと同じ家に住む「Lodger」の場合は、上のルールの一部が当てはまらないので、条件をよく確認してください。</p>
+    </div></div>
+
+    <div class="card step"><span class="n">5</span><div>
+      <h3>詐欺に注意</h3>
+      <ul>
+        <li>内見の前に「先にお金を振り込んで」は詐欺のサイン</li>
+        <li>「大家は海外にいるので、お金を払えば鍵を送る」もよくある手口</li>
+        <li>相場よりずっと安い部屋は疑う</li>
+        <li>現金手渡しは避けて、記録が残る方法で払い、領収書をもらう</li>
+      </ul>
+    </div></div>
+
+    <div class="card step"><span class="n">6</span><div>
+      <h3>引っ越したら</h3>
+      <ul>
+        <li>銀行・GP（かかりつけ医）・職場に新しい住所を伝える</li>
+        <li>Council Tax（住民税のようなもの）を自分で払うのか、家賃に込みなのか確認</li>
+        <li>このアプリの「緊急連絡先」のメモも新しい住所に直す</li>
+      </ul>
+    </div></div>
+  </div>
+</section>
+
+<!-- ===== 仕事探しの手順 ===== -->
+<section class="view" id="v-job" data-view="job" hidden>
+  <header class="tk">
+    <span class="shine"></span>
+    <div class="body">
+      <div class="top"><span>JOB HUNTING</span><span>YMS VISA</span></div>
+      <span class="s">Your first UK job</span>
+      <h2>仕事探しの手順</h2>
+      <div class="orn" aria-hidden="true">✦</div>
+      <div class="fields"><div>最低賃金（21歳以上）<b>時給 £12.71</b></div><div>働ける仕事<b>ほとんどOK</b></div></div>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="card step"><span class="n">1</span><div>
+      <h3>準備するもの</h3>
+      <ul>
+        <li><b>NI番号</b>：申請中でも働き始められることが多い。決まったら職場に伝える</li>
+        <li><b>銀行口座</b>：給料の振込先</li>
+        <li><b>シェアコード</b>：働く資格の証明。UKVIアカウントの「Prove your right to work」で出す</li>
+        <li><b>住所</b>：最初はホストファミリーの家でOK。引っ越したら職場に伝える</li>
+      </ul>
+    </div></div>
+
+    <div class="card step"><span class="n">2</span><div>
+      <h3>イギリス式の履歴書（CV）を作る</h3>
+      <ul>
+        <li>英語で1〜2ページ。<b>写真・生年月日・性別は書かない</b>のが普通</li>
+        <li>順番：名前と連絡先 → 自己紹介2〜3行 → 職歴（新しい順）→ 学歴 → スキル（日本語、接客の経験など）</li>
+        <li>短い応募の手紙（カバーレター）を求められることもある</li>
+      </ul>
+    </div></div>
+
+    <div class="card step"><span class="n">3</span><div>
+      <h3>仕事を探す</h3>
+      <ul>
+        <li><b>Indeed・Reed・Totaljobs・LinkedIn</b>：求人サイト</li>
+        <li><b>MixB・日系の人材紹介会社</b>：日本語を使う仕事、日系企業の仕事</li>
+        <li>カフェ・レストラン・お店は、CVを持ってお店に直接行き「Are you hiring?」と渡す方法もよくある</li>
+        <li>オックスフォードは観光地で大学の街なので、カフェ・レストラン・ホテル・お土産店などの仕事が多い</li>
+        <li>日本語を使う仕事や日系企業の仕事はロンドンのほうが多い（電車で1時間ほど）</li>
+      </ul>
+    </div></div>
+
+    <div class="card step"><span class="n">4</span><div>
+      <h3>面接・トライアル</h3>
+      <ul>
+        <li>よく聞かれること：自己紹介、なぜここで働きたいか、いつから・週に何時間働けるか、ビザの期限</li>
+        <li>飲食店では、試しに働く「Trial shift」があることも。長時間の無給トライアルには注意</li>
+      </ul>
+    </div></div>
+
+    <div class="card step"><span class="n">5</span><div>
+      <h3>働き始めたら</h3>
+      <ul>
+        <li>時給・勤務時間・休みなどの条件を、書面でもらう</li>
+        <li>給与明細（Payslip）を毎回確認する</li>
+        <li>最初は税金が多めに引かれることがある（Emergency tax code）。NI番号を職場に伝えれば、あとで調整される</li>
+        <li>最低賃金は、21歳以上で時給£12.71（2026年4月から。毎年4月に変わる）</li>
+        <li>有給休暇は法律で年5.6週分が最低ライン</li>
+      </ul>
+    </div></div>
+
+    <div class="card step"><span class="n">6</span><div>
+      <h3>気をつけること</h3>
+      <ul>
+        <li>「登録料」「研修費」などを先に払わせる仕事は詐欺</li>
+        <li>「口座を貸すだけ」「荷物を受け取るだけ」で高収入、は犯罪の手伝いになる（大使館も注意を呼びかけている）</li>
+        <li>現金手渡しだけ・契約書なしの仕事は避ける</li>
+        <li>ワーホリ（YMS）ビザは、プロのスポーツ選手以外ならほとんどの仕事ができる</li>
+      </ul>
+    </div></div>
   </div>
 </section>
 
@@ -511,8 +689,10 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
     <div class="card">
       <h3>パスポートを失くした</h3>
       <ul>
-        <li>警察に届けて、受理番号（crime reference number）をもらう</li>
-        <li>在英国日本国大使館で再発行の手続き</li>
+        <li><b>盗まれたとき</b>：先に警察に届けて、届け出たことが分かる書類をもらう</li>
+        <li><b>なくしたとき</b>：イギリスの警察は紛失の届けを受け付けていないので、そのまま大使館へ（なくした経緯を大使館で書く）</li>
+        <li>在英国日本国大使館で、紛失の届けと新しいパスポートの申請（窓口は予約制。くわしくは「緊急連絡先」の大使館の欄）</li>
+        <li>急いで日本に帰る必要があるときは、パスポートの代わりの「帰国のための渡航書」を出してもらえることもある</li>
         <li>新しいパスポートになったら、UKVIアカウントでeVisaの登録を更新</li>
       </ul>
     </div>
@@ -556,16 +736,25 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
     </div>
     <p class="sec-note">「電話する」を押すと、かける前に確認の画面が出ます。イギリスのSIMが入っているときに使えます。</p>
     <div class="card">
-      <h3>在英国日本国大使館（領事部）</h3>
-      <p><span class="mono">+44 (0)20 7465 6500</span></p>
-      <a class="tel" href="tel:+442074656500">大使館に電話する</a>
-      <p class="d">101-104 Piccadilly, London W1J 7JT<br>パスポートの紛失、事件・事故に巻き込まれたときの相談先。最新の受付時間は大使館のサイトで確認。</p>
+      <h3>在英国日本国大使館</h3>
+      <p><b>事故・事件に巻き込まれた／パスポートのこと</b><br>領事班 <span class="mono">+44 (0)20 7465 6565</span></p>
+      <a class="tel" href="tel:+442074656565">領事班に電話する</a>
+      <p><b>大きな災害・テロなどの緊急事態</b><br>代表 <span class="mono">+44 (0)20 7465 6500</span></p>
+      <a class="tel" href="tel:+442074656500">代表に電話する</a>
+      <p class="d">101-104 Piccadilly, London W1J 7JT（最寄り駅：Green Park）<br>窓口は平日 9:30〜16:30・予約制。土日と日英の祝日は休館。<br>ビザ（YMS・eVisa）のことは大使館では答えられないので、イギリス政府（gov.uk）に問い合わせる。</p>
+      <a class="sitelink" href="https://www.uk.emb-japan.go.jp/itprtop_ja/index.html" target="_blank" rel="noopener">大使館のサイトを開く ›</a>
+      <p class="d url">www.uk.emb-japan.go.jp</p>
     </div>
     <div class="card memo">
       <h3>自分の連絡先メモ</h3>
       <p class="d">書いた内容はこのiPhoneに保存されます。</p>
-      <label for="c-host">ホストファミリー</label><input id="c-host" type="text" placeholder="名前・電話番号・住所">
-      <label for="c-family">日本の家族</label><input id="c-family" type="text" placeholder="名前・電話番号">
+      <label for="c-host">ホストファミリーの名前</label><input id="c-host" type="text" placeholder="例：Smith さん" autocomplete="off">
+      <label for="c-host-tel">ホストファミリーの電話番号</label><input id="c-host-tel" type="tel" inputmode="tel" placeholder="例：07123 456789" autocomplete="off">
+      <label for="c-host-addr">ホストファミリーの住所</label><input id="c-host-addr" type="text" placeholder="例：12 Park Road, Oxford OX4 1AB" autocomplete="off">
+      <p class="d">住所は「見せる英語カード」の「この住所まで行きたいです」でも表示されます。</p>
+      <label for="c-family">日本の家族の名前</label><input id="c-family" type="text" placeholder="例：母" autocomplete="off">
+      <label for="c-family-tel">日本の家族の電話番号</label><input id="c-family-tel" type="tel" inputmode="tel" placeholder="例：+81 90 1234 5678" autocomplete="off">
+      <p class="d">イギリスから日本の携帯にかけるときは、最初の0をとって「+81」をつけます（090… → +81 90…）。</p>
       <label for="c-card">カード会社の紛失・盗難窓口</label><input id="c-card" type="text" placeholder="カードの裏面に書いてある海外用の番号">
       <label for="c-ins">海外旅行保険の窓口</label><input id="c-ins" type="text" placeholder="保険証券に書いてある番号・証券番号">
       <label for="c-agent">学校・エージェント</label><input id="c-agent" type="text" placeholder="担当者名・電話番号">
@@ -596,7 +785,7 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
       <ul>
         <li>明るいうちに、少しだけ外を歩いてみて。冬は日光が足りないから、NHSも10〜3月はビタミンDのサプリをすすめてるよ</li>
         <li>寝る時間と起きる時間をなんとなく決めておくと、気持ちが落ち着きやすいみたい</li>
-        <li>日本のごはんを食べよう。ロンドンには日本の食材のお店も和食屋さんもあるから、たまには思いっきり甘えて</li>
+        <li>日本のごはんを食べよう。オックスフォードにもアジアの食材のお店はあるし、ロンドンまで電車で1時間くらいだから、日本の食材のお店や和食屋さんにも行けるよ。たまには思いっきり甘えて</li>
         <li>日本人の集まりや、趣味のサークルにちょっと顔を出してみるのもあり。話せる人がひとりいるだけで、全然ちがうよ</li>
       </ul>
     </div>
@@ -637,25 +826,17 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
   </header>
 
   <div class="content">
-    <p class="sec-note">とっさに英語が出てこないときは、カードを押して、画面を相手に見せてください。</p>
+    <p class="sec-note">とっさに英語が出てこないときは、カードを押して、画面を相手に見せてください。☆を押すとお気に入りに入って、一番上に出ます。</p>
+
+    <p class="mylabel" id="favLabel" hidden>★ お気に入り</p>
+    <div class="plist" id="favList" hidden></div>
 
     <p class="mylabel" id="myLabel" hidden>自分のカード</p>
     <div class="plist" id="myList" hidden></div>
 
-    <form class="card tool" id="myForm">
-      <h3>自分のカードを作る</h3>
-      <p class="d">よく使う言葉を、自分でカードにできます。</p>
-      <label for="myJp">日本語（自分用のメモ）</label>
-      <input id="myJp" type="text" placeholder="例：カプチーノのMサイズください" autocomplete="off">
-      <label for="myEn">相手に見せる英語</label>
-      <input id="myEn" type="text" placeholder="例：A medium cappuccino, please." autocomplete="off" required>
-      <button type="submit" class="addbtn">カードを追加</button>
-      <p class="d" id="myMsg">英語が分からないときは、翻訳アプリで調べて貼り付けると便利です。</p>
-    </form>
-
     <p class="mylabel">よく使うカード</p>
-    <div class="plist">
-      <button type="button" class="phrase" data-address="1" data-en="Could you take me to this address, please?"><span class="jp">この住所まで行きたいです</span><span class="en">Could you take me to this address, please?</span><span class="hint">ホストファミリーのメモ（緊急連絡先のページ）も一緒に表示されます</span></button>
+    <div class="plist" id="defList">
+      <button type="button" class="phrase" data-address="1" data-en="Could you take me to this address, please?"><span class="jp">この住所まで行きたいです</span><span class="en">Could you take me to this address, please?</span><span class="hint">「緊急連絡先」のメモに入れたホストファミリーの住所が一緒に表示されます</span></button>
       <button type="button" class="phrase" data-en="I don't feel well. Could you help me, please?"><span class="jp">具合が悪いです。助けてください</span><span class="en">I don't feel well. Could you help me, please?</span></button>
       <button type="button" class="phrase" data-en="Please call an ambulance."><span class="jp">救急車を呼んでください</span><span class="en">Please call an ambulance.</span></button>
       <button type="button" class="phrase" data-en="I'm lost. Could you show me where I am on this map?"><span class="jp">道に迷いました。地図で今いる場所を教えてください</span><span class="en">I'm lost. Could you show me where I am on this map?</span></button>
@@ -686,6 +867,17 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
         <button type="button" class="chip" data-en="I hurt my ankle." data-jp="足首をけがした">足首をけがした</button>
       </div>
     </div>
+
+    <form class="card tool" id="myForm">
+      <h3>自分のカードを作る</h3>
+      <p class="d">よく使う言葉を、自分でカードにできます。</p>
+      <label for="myJp">日本語（自分用のメモ）</label>
+      <input id="myJp" type="text" placeholder="例：カプチーノのMサイズください" autocomplete="off">
+      <label for="myEn">相手に見せる英語</label>
+      <input id="myEn" type="text" placeholder="例：A medium cappuccino, please." autocomplete="off" required>
+      <button type="submit" class="addbtn">カードを追加</button>
+      <p class="d" id="myMsg">英語が分からないときは、翻訳アプリで調べて貼り付けると便利です。</p>
+    </form>
   </div>
 </section>
 
@@ -724,16 +916,15 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
       </ul>
     </div>
     <div class="card">
-      <h3>交通（ロンドン）</h3>
+      <h3>交通</h3>
       <ul>
-        <li><b>乗るときに使うもの</b>：Suicaのような交通系ICで乗る人は少なく、<b>ふつうのカードのタッチ決済</b>で乗るのが一般的。日本のSuica・PASMOは使えない</li>
-        <li><b>着いてすぐは</b>：日本のVisaかMastercardで、タッチ決済のマークがついたカードで乗れる（JCBは使えないことがある）。海外事務手数料（2〜3%ほど）がかかることが多い</li>
-        <li><b>現地の口座ができたら</b>：MonzoやRevolutのカードに切り替えると手数料なし。スマホのApple Pay・Google Payに入れてもOK（iPhoneは「エクスプレスカード」に設定すると、ロック解除なしで改札を通れる）</li>
-        <li><b>Oyster（オイスター）カード</b>：ロンドンの交通用ICカード。駅で買えるがカード代£7かかる。運賃はタッチ決済と同じなので、なくても大丈夫</li>
-        <li><b>運賃の上限</b>：1日・1週間に使う金額に上限があり、それ以上は請求されない。ただし<b>毎回同じカード（同じスマホ）</b>でタッチしたときだけ</li>
-        <li><b>地下鉄・電車</b>：入るときと出るときに、同じカード（かスマホ）をタッチ。違うものをタッチすると高くつく</li>
-        <li><b>バス</b>：乗るときだけタッチ。現金は使えない</li>
-        <li><b>エスカレーター</b>：右に立って、左をあける</li>
+        <li><b>払い方</b>：Suicaのような交通系ICで乗る人は少なく、<b>ふつうのカードのタッチ決済</b>が一般的</li>
+        <li><b>着いてすぐは</b>：日本のVisaかMastercardで、タッチ決済のマークがついたカードが使える（JCBは使えないことがある）。海外事務手数料（2〜3%ほど）がかかることが多い</li>
+        <li><b>現地の口座ができたら</b>：MonzoやRevolutのカードに切り替えると手数料なし。スマホのApple Pay・Google Payに入れてもOK</li>
+        <li><b>オックスフォードの中</b>：移動はバスが中心（Oxford Bus Company・Stagecoach）。自転車に乗る人も多い</li>
+        <li><b>ロンドンへ</b>：電車で1時間ほど。切符はアプリ（Trainline）で早めに買うと安い</li>
+        <li><b>Railcard</b>：「16-25 Railcard」か「26-30 Railcard」（年齢に合うほう）を買うと、電車の運賃がほぼ3分の1引きになる</li>
+        <li><b>ロンドンに行ったとき</b>：地下鉄は入るときと出るときに同じカード（かスマホ）をタッチ。1日の運賃には上限があるが、毎回同じカードでタッチしたときだけ。エスカレーターは右に立って左をあける</li>
         <li><b>距離の単位</b>：マイル（1マイル＝約1.6km）</li>
       </ul>
     </div>
@@ -750,11 +941,11 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
     <div class="card">
       <h3>入れておくと便利なアプリ</h3>
       <ul>
-        <li><b>Citymapper</b>：ロンドンの乗り換え案内。バスも地下鉄も分かりやすい</li>
-        <li><b>Google マップ</b>：ロンドンの地図を保存しておくと、電波がなくても見られる</li>
+        <li><b>Google マップ</b>：バスの乗り換えも調べられる。住む街の地図を保存しておくと、電波がなくても見られる</li>
+        <li><b>Citymapper</b>：ロンドンに行ったときの乗り換え案内。地下鉄もバスも分かりやすい</li>
         <li><b>WhatsApp</b>：連絡用。日本にいるうちに登録しておくと楽</li>
         <li><b>NHS App</b>：GPに登録したあと、予約や処方の確認に使える</li>
-        <li><b>Trainline</b>：ロンドンの外へ行く電車の予約。早く買うと安い</li>
+        <li><b>Trainline</b>：電車の切符の予約（ロンドンへ行くときなど）。早く買うと安い</li>
         <li><b>Uber・Bolt</b>：配車アプリ。夜遅いときや荷物が多いときに</li>
         <li><b>Monzo・Revolut・Wise</b>：銀行・送金。アプリで口座が作れる</li>
         <li><b>Too Good To Go</b>：お店の余った食べ物を安く買える。節約に</li>
@@ -772,7 +963,7 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
       <span class="s">Quick little helpers</span>
       <h2>便利ツール</h2>
       <div class="orn" aria-hidden="true">✦</div>
-      <div class="fields"><div>LONDON<b data-clock="Europe/London">--:--</b></div><div>TOKYO<b data-clock="Asia/Tokyo">--:--</b></div></div>
+      <div class="fields"><div>UK<b data-clock="Europe/London">--:--</b></div><div>TOKYO<b data-clock="Asia/Tokyo">--:--</b></div></div>
     </div>
   </header>
 
@@ -780,7 +971,7 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
     <div class="card">
       <h3>今の時刻</h3>
       <div class="clocks">
-        <div><span class="d">ロンドン</span><b data-clock="Europe/London">--:--</b><span class="d" data-clockdate="Europe/London"></span></div>
+        <div><span class="d">イギリス</span><b data-clock="Europe/London">--:--</b><span class="d" data-clockdate="Europe/London"></span></div>
         <div><span class="d">日本</span><b data-clock="Asia/Tokyo">--:--</b><span class="d" data-clockdate="Asia/Tokyo"></span></div>
       </div>
     </div>
@@ -797,10 +988,10 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
     </div>
 
     <div class="card tool">
-      <h3>ロンドン◯日目</h3>
+      <h3>イギリス◯日目</h3>
       <label for="arriveDate">イギリスに着く日（着いた日）</label>
       <input id="arriveDate" type="date">
-      <p class="result" id="dayOut">日付を入れると、目次に「ロンドン生活 ◯日目」と出ます</p>
+      <p class="result" id="dayOut">日付を入れると、目次に「イギリス生活 ◯日目」と出ます</p>
     </div>
   </div>
 </section>
@@ -840,7 +1031,7 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
 
 <script>
 (function(){
-  var VIEWS=['home','before','arrival','after','help','contacts','homesick','phrases','tips','tools','wish'];
+  var VIEWS=['home','before','arrival','after','home-hunt','job','help','contacts','homesick','phrases','tips','tools','wish'];
   var KEY='uk-whv-checklist-v1', MKEY='uk-whv-memo-v1';
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -950,9 +1141,9 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
   function toUTC(s){var p=s.split('-');return Date.UTC(+p[0],+p[1]-1,+p[2])}
   function renderDays(){
     var v=arriveInput.value,home=document.querySelector('[data-daycount]'),out=document.getElementById('dayOut');
-    if(!/^\d{4}-\d{2}-\d{2}$/.test(v)){home.hidden=true;out.textContent='日付を入れると、目次に「ロンドン生活 ◯日目」と出ます';return}
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(v)){home.hidden=true;out.textContent='日付を入れると、目次に「イギリス生活 ◯日目」と出ます';return}
     var diff=Math.round((toUTC(londonToday())-toUTC(v))/86400000);
-    var txt=diff<0?('ロンドン到着まで あと'+(-diff)+'日'):('ロンドン生活 '+(diff+1)+'日目');
+    var txt=diff<0?('イギリス到着まで あと'+(-diff)+'日'):('イギリス生活 '+(diff+1)+'日目');
     home.textContent=txt;home.hidden=false;out.textContent=txt;
   }
   try{arriveInput.value=localStorage.getItem(AKEY)||''}catch(e){}
@@ -983,35 +1174,54 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
   var showBox=document.getElementById('show'),showEn=document.getElementById('showEn'),showJp=document.getElementById('showJp'),showAddr=document.getElementById('showAddr');
   function openShow(en,jp,withAddr){
     showEn.textContent=en;showJp.textContent=jp;
-    var a=withAddr?(memo['c-host']||'').trim():'';
+    var a=withAddr?(memo['c-host-addr']||'').trim():'';
     showAddr.textContent=a;showAddr.hidden=!a;
+    if(withAddr&&!a)showJp.textContent=jp+'（住所は「緊急連絡先」のメモに入れておくと、ここに出ます）';
     showBox.hidden=false;document.body.style.overflow='hidden';
   }
   function closeShow(){showBox.hidden=true;document.body.style.overflow=''}
   showBox.addEventListener('click',closeShow);
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!showBox.hidden)closeShow()});
-  [].forEach.call(document.querySelectorAll('.phrase'),function(b){
-    b.addEventListener('click',function(){openShow(b.dataset.en,b.querySelector('.jp').textContent,!!b.dataset.address)});
-  });
   [].forEach.call(document.querySelectorAll('#v-phrases .chip'),function(b){
     b.addEventListener('click',function(){openShow(b.dataset.en,b.dataset.jp,false)});
   });
 
-  // ---- 自分のカード（自分で作れる英語カード） ----
+  // ---- 英語カード：お気に入り（☆）・自分のカード・よく使うカード ----
+  var defList=document.getElementById('defList');
+  var defaults=[].map.call(defList.querySelectorAll('.phrase'),function(b){
+    var h=b.querySelector('.hint');
+    return {jp:b.querySelector('.jp').textContent,en:b.dataset.en,addr:!!b.dataset.address,hint:h?h.textContent:''};
+  });
   var PKEY='uk-whv-phrases-v1',mine=[];
   try{mine=JSON.parse(localStorage.getItem(PKEY)||'[]')||[]}catch(e){mine=[]}
   if(!Array.isArray(mine))mine=[];
+  var FKEY='uk-whv-fav-v1',favs=[];
+  try{favs=JSON.parse(localStorage.getItem(FKEY)||'[]')||[]}catch(e){favs=[]}
+  if(!Array.isArray(favs))favs=[];
+  var favList=document.getElementById('favList'),favLabel=document.getElementById('favLabel');
   var myList=document.getElementById('myList'),myLabel=document.getElementById('myLabel'),myJp=document.getElementById('myJp'),myEn=document.getElementById('myEn'),myMsg=document.getElementById('myMsg');
   var myMsgDefault=myMsg.textContent;
   function saveMine(){try{localStorage.setItem(PKEY,JSON.stringify(mine))}catch(e){}}
-  function renderMine(){
-    myList.textContent='';
-    mine.forEach(function(p,i){
-      var wrap=document.createElement('div');wrap.className='mycard';
-      var b=document.createElement('button');b.type='button';b.className='phrase';
-      if(p.jp){var j=document.createElement('span');j.className='jp';j.textContent=p.jp;b.appendChild(j)}
-      var en=document.createElement('span');en.className='en';en.textContent=p.en;b.appendChild(en);
-      b.addEventListener('click',function(){openShow(p.en,p.jp||'',false)});
+  function saveFav(){try{localStorage.setItem(FKEY,JSON.stringify(favs))}catch(e){}}
+  function toggleFav(en){
+    var i=favs.indexOf(en);
+    if(i>=0)favs.splice(i,1);else favs.unshift(en);
+    saveFav();renderCards();
+  }
+  function makeCard(p,onDelete){
+    var fav=favs.indexOf(p.en)>=0;
+    var wrap=document.createElement('div');wrap.className='mycard'+(onDelete?' has-del':'');
+    var b=document.createElement('button');b.type='button';b.className='phrase';
+    if(p.jp){var j=document.createElement('span');j.className='jp';j.textContent=p.jp;b.appendChild(j)}
+    var en=document.createElement('span');en.className='en';en.textContent=p.en;b.appendChild(en);
+    if(p.hint){var h=document.createElement('span');h.className='hint';h.textContent=p.hint;b.appendChild(h)}
+    b.addEventListener('click',function(){openShow(p.en,p.jp||'',!!p.addr)});
+    var st=document.createElement('button');st.type='button';st.className='star'+(fav?' on':'');
+    st.textContent=fav?'★':'☆';st.setAttribute('aria-pressed',fav?'true':'false');
+    st.setAttribute('aria-label',fav?'お気に入りから外す':'お気に入りに入れる');
+    st.addEventListener('click',function(){toggleFav(p.en)});
+    wrap.appendChild(b);wrap.appendChild(st);
+    if(onDelete){
       var del=document.createElement('button');del.type='button';del.className='del';del.textContent='×';del.setAttribute('aria-label','このカードを消す');
       var timer;
       del.addEventListener('click',function(){
@@ -1020,28 +1230,55 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
           timer=setTimeout(function(){del.classList.remove('armed');del.textContent='×'},3000);
           return;
         }
-        clearTimeout(timer);mine.splice(i,1);saveMine();renderMine();
+        clearTimeout(timer);onDelete();
       });
-      wrap.appendChild(b);wrap.appendChild(del);myList.appendChild(wrap);
+      wrap.appendChild(del);
+    }
+    return wrap;
+  }
+  function removeMine(p){
+    var i=mine.indexOf(p);if(i>=0)mine.splice(i,1);
+    var f=favs.indexOf(p.en);if(f>=0){favs.splice(f,1);saveFav()}
+    saveMine();renderCards();
+  }
+  function renderCards(){
+    var all=mine.concat(defaults);
+    var before=favs.length;
+    favs=favs.filter(function(en){return all.some(function(p){return p.en===en})});
+    if(favs.length!==before)saveFav();
+    // お気に入り（☆の新しい順）
+    favList.textContent='';
+    favs.forEach(function(en){
+      var own=mine.filter(function(p){return p.en===en})[0];
+      var p=own||defaults.filter(function(d){return d.en===en})[0];
+      favList.appendChild(makeCard(p,own?function(){removeMine(own)}:null));
     });
-    myList.hidden=myLabel.hidden=!mine.length;
+    favList.hidden=favLabel.hidden=!favs.length;
+    // 自分のカード（お気に入りに入れたものは上に移る）
+    myList.textContent='';
+    var myRest=mine.filter(function(p){return favs.indexOf(p.en)<0});
+    myRest.forEach(function(p){myList.appendChild(makeCard(p,function(){removeMine(p)}))});
+    myList.hidden=myLabel.hidden=!myRest.length;
+    // よく使うカード
+    defList.textContent='';
+    defaults.filter(function(p){return favs.indexOf(p.en)<0}).forEach(function(p){defList.appendChild(makeCard(p,null))});
   }
   document.getElementById('myForm').addEventListener('submit',function(e){
     e.preventDefault();
     var en=myEn.value.trim(),jp=myJp.value.trim();
     if(!en){myMsg.textContent='「相手に見せる英語」を入れてください';myEn.focus();return}
-    mine.unshift({jp:jp,en:en});saveMine();renderMine();
+    mine.unshift({jp:jp,en:en});saveMine();renderCards();
     myJp.value='';myEn.value='';myMsg.textContent='追加しました。上の「自分のカード」に入っています';
     setTimeout(function(){myMsg.textContent=myMsgDefault},4000);
   });
-  renderMine();
+  renderCards();
 
   // ---- やりたいことリスト ----
   var WKEY='uk-whv-wish-v1',wishes=[];
   try{wishes=JSON.parse(localStorage.getItem(WKEY)||'[]')||[]}catch(e){wishes=[]}
   if(!Array.isArray(wishes))wishes=[];
   var wishList=document.getElementById('wishList'),wishEmpty=document.getElementById('wishEmpty'),wishInput=document.getElementById('wishInput'),wishIdeas=document.getElementById('wishIdeas');
-  var IDEAS=['アフタヌーンティーに行く','ビッグ・ベンを見る','大英博物館に行く','ミュージカルを観る','パブでフィッシュ＆チップス','コッツウォルズに行く','クリスマスマーケットに行く','蚤の市をのぞく'];
+  var IDEAS=['アフタヌーンティーに行く','ボドリアン図書館を見学する','パンティング（小舟遊び）をする','コッツウォルズに行く','パブでフィッシュ＆チップス','ロンドンでミュージカルを観る','大英博物館に行く','クリスマスマーケットに行く'];
   function saveWish(){try{localStorage.setItem(WKEY,JSON.stringify(wishes))}catch(e){}}
   function renderWish(){
     wishList.textContent='';
