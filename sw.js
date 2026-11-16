@@ -1,7 +1,7 @@
 // 電波がなくてもページを開けるようにする仕組み（Service Worker）
 // ページ本体は「まず最新を取りに行き、だめなら保存してある分を出す」
 // 画像やフォントは「保存してある分を先に出し、なければ取りに行く」
-var CACHE = 'mipa-uk-v1';
+var CACHE = 'mipa-uk-v2';
 var CORE = ['./', 'index.html', 'bg.webp', 'apple-touch-icon.png', 'icon-512.png'];
 
 self.addEventListener('install', function (e) {
@@ -25,8 +25,9 @@ self.addEventListener('fetch', function (e) {
   var isPage = req.mode === 'navigate' || (url.origin === location.origin && /(\/|index\.html)$/.test(url.pathname));
 
   if (isPage) {
+    // ブラウザの一時保存を使わず、毎回GitHubに新しい版がないか確かめる
     e.respondWith(
-      fetch(req).then(function (res) {
+      fetch(req.url, { cache: 'no-cache', credentials: 'same-origin' }).then(function (res) {
         var copy = res.clone();
         caches.open(CACHE).then(function (c) { c.put('index.html', copy); });
         return res;
