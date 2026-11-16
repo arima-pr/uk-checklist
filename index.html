@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ワーホリ準備">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>イギリス ワーホリ準備リスト</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: 一本の縦カラム。上に進み具合、下に「出発前」「到着後」の2区分をチェック行で並べる */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --ink:#1a2233; --muted:#5b6478; --line:#dde1ea;
+  --navy:#22335c; --red:#c8202f; --red-soft:#fbe9ea; --green:#1f7a4d; --green-soft:#e5f3ec;
+  --amber:#8a5a00; --amber-soft:#fdf3dc;
+  --f-display:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121722; --surface:#1a2130; --ink:#e7eaf1; --muted:#9aa3b6; --line:#2c3547;
+  --navy:#9fb4e8; --red:#ff6b74; --red-soft:#3a1e24; --green:#5fd39a; --green-soft:#16302a;
+  --amber:#f0c060; --amber-soft:#3a3020; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1a2130; --ink:#e7eaf1; --muted:#9aa3b6; --line:#2c3547;
+  --navy:#9fb4e8; --red:#ff6b74; --red-soft:#3a1e24; --green:#5fd39a; --green-soft:#16302a;
+  --amber:#f0c060; --amber-soft:#3a3020; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7}
+.wrap{max-width:720px;margin:0 auto;padding-block:28px 56px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:28px}
+
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--red);text-transform:uppercase}
+h1{font-family:var(--f-display);font-weight:900;font-size:clamp(26px,6vw,36px);line-height:1.3;margin:0;color:var(--navy);text-wrap:balance}
+.lead{margin:0;color:var(--muted)}
+
+.progress{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.progress-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.progress-row strong{font-size:15px}
+.count{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar span{display:block;height:100%;width:0;background:var(--green);border-radius:99px;transition:width .3s ease}
+
+section{display:flex;flex-direction:column;gap:14px}
+.sec-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.tag.before{background:var(--red-soft);color:var(--red)}
+.tag.after{background:var(--green-soft);color:var(--green)}
+h2{font-family:var(--f-display);font-size:21px;font-weight:700;margin:0;flex:1;min-width:0}
+.sec-count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.sec-note{margin:-6px 0 0;color:var(--muted);font-size:14px}
+
+.group{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.group h3{margin:0;padding:10px 18px;font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--navy);background:color-mix(in srgb,var(--navy) 7%,var(--surface));border-bottom:1px solid var(--line)}
+.item{display:grid;grid-template-columns:24px 1fr;gap:12px;padding:14px 18px;border-top:1px solid var(--line);cursor:pointer;align-items:start}
+.group h3 + .item{border-top:0}
+.item input{appearance:none;width:22px;height:22px;margin:2px 0 0;border:2px solid var(--muted);border-radius:6px;display:grid;place-content:center;cursor:pointer;background:var(--surface)}
+.item input::after{content:"";width:6px;height:11px;border:solid var(--surface);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px);opacity:0}
+.item input:checked{background:var(--green);border-color:var(--green)}
+.item input:checked::after{opacity:1}
+.item input:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.item .txt{min-width:0;display:flex;flex-direction:column;gap:2px}
+.item .t{font-weight:700}
+.item .d{color:var(--muted);font-size:14px}
+.item.done .t{text-decoration:line-through;text-decoration-color:var(--muted);color:var(--muted)}
+.item:hover{background:color-mix(in srgb,var(--navy) 4%,var(--surface))}
+
+.notice{background:var(--amber-soft);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.notice h2{font-size:16px;color:var(--amber)}
+.notice ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.notice a{color:var(--navy)}
+
+.reset{display:flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:13px}
+.reset button{font:inherit;font-size:13px;padding:6px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.reset button.confirm{border-color:var(--red);color:var(--red)}
+.reset button:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.progress-row{align-items:center}
+.progress-right{display:flex;align-items:center;gap:12px}
+.menu-btn{width:40px;height:40px;border:1px solid var(--line);border-radius:10px;background:var(--surface);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;cursor:pointer;padding:0}
+.menu-btn span{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px}
+.menu-btn:focus-visible,.close-btn:focus-visible,.menu-item:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.group,section,.notice{scroll-margin-top:110px}
+.scrim{position:fixed;inset:0;background:rgba(8,12,22,.5);z-index:20}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(320px,85vw);background:var(--surface);z-index:21;overflow-y:auto;box-shadow:-8px 0 24px rgba(0,0,0,.18);display:flex;flex-direction:column;gap:8px;
+  padding:calc(16px + env(safe-area-inset-top,0px)) calc(16px + env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) 16px}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;padding:0 4px 8px;border-bottom:1px solid var(--line)}
+.drawer-head strong{font-family:var(--f-display);font-size:18px;color:var(--navy)}
+.close-btn{width:36px;height:36px;border:0;background:transparent;color:var(--ink);font-size:26px;line-height:1;cursor:pointer;border-radius:8px}
+.close-btn:hover{background:color-mix(in srgb,var(--navy) 8%,var(--surface))}
+#menuList{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.menu-heading{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--red);padding:14px 12px 4px}
+.menu-item{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px;border:0;border-radius:8px;background:transparent;color:var(--ink);font:inherit;font-weight:700;text-align:left;cursor:pointer}
+.menu-item.sub{padding-left:24px;font-weight:500}
+.menu-item:hover{background:color-mix(in srgb,var(--navy) 7%,var(--surface))}
+.menu-count{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.menu-count.full{color:var(--green)}
+.tag.help{background:color-mix(in srgb,var(--navy) 12%,var(--surface));color:var(--navy)}
+.info{gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{margin:0;font-size:16px;color:var(--navy)}
+.card p{margin:0}
+.card ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.card .d,.num .d{color:var(--muted);font-size:14px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:500;white-space:nowrap}
+.numbers{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.num{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.num b{font-family:var(--f-mono);font-size:28px;line-height:1.2;color:var(--navy);font-variant-numeric:tabular-nums}
+.num.urgent{border-color:var(--red);background:var(--red-soft)}
+.num.urgent b{color:var(--red)}
+.num .t{font-weight:700}
+.memo label{font-size:13px;font-weight:700;margin-top:6px}
+.memo input{font:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%;box-sizing:border-box}
+.memo input:focus-visible{outline:3px solid var(--navy);outline-offset:1px}
+@media (prefers-reduced-motion:reduce){.bar span{transition:none}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Youth Mobility Scheme · 1 year</div>
+    <h1>イギリス ワーホリ<br>出発前チェックリスト</h1>
+    <p class="lead">終わったものにチェックを入れていってください。チェックはこのブラウザに保存されるので、閉じても残ります。</p>
+  </header>
+
+  <div class="progress" aria-live="polite">
+    <div class="progress-row"><strong id="progressLabel">ぜんぶで 0 / 0</strong><span class="progress-right"><span class="count" id="progressPct">0%</span><button type="button" class="menu-btn" id="menuBtn" aria-label="目次を開く" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button></span></div>
+    <div class="bar"><span id="progressBar"></span></div>
+  </div>
+
+  <section data-sec="before">
+    <div class="sec-head"><span class="tag before">日本でしかできない</span><h2>出発前に必ず</h2><span class="sec-count"></span></div>
+
+    <div class="group">
+      <h3>ビザ</h3>
+      <label class="item"><input type="checkbox" id="v1"><span class="txt"><span class="t">eVisa（電子ビザ）が表示されるか確認</span><span class="d">今は紙のカード（BRP）ではなくオンラインのeVisa。UKVIアカウントにログインしてビザが出るか見る。</span></span></label>
+      <label class="item"><input type="checkbox" id="v2"><span class="txt"><span class="t">パスポートがeVisaに紐づいているか確認</span><span class="d">入国で使うパスポートが登録したものと同じか。違うと搭乗や入国でもめる。</span></span></label>
+      <label class="item"><input type="checkbox" id="v3"><span class="txt"><span class="t">ビザ許可のメール・申請書類のコピーを用意</span><span class="d">スマホに保存＋紙でも1部。入国審査で聞かれたとき用。</span></span></label>
+      <label class="item"><input type="checkbox" id="v4"><span class="txt"><span class="t">ビザの開始日より前に入国しないか確認</span><span class="d">ビザには有効開始日がある。許可メールの日付とフライトの到着日を見比べる。</span></span></label>
+    </div>
+
+    <div class="group">
+      <h3>役所の手続き</h3>
+      <label class="item"><input type="checkbox" id="g1"><span class="txt"><span class="t">海外転出届を出す</span><span class="d">1年以上いるなら住民票を抜くのが一般的。国民健康保険・国民年金の支払いが止まる。</span></span></label>
+      <label class="item"><input type="checkbox" id="g2"><span class="txt"><span class="t">住民税の払い残しを確認</span><span class="d">翌年1月1日に住民票がなければ翌年度分はかからない。今年度分は払い切っておく。</span></span></label>
+      <label class="item"><input type="checkbox" id="g3"><span class="txt"><span class="t">国民年金の任意加入を決める</span><span class="d">続けるかどうかで将来の年金額が変わる。</span></span></label>
+      <label class="item"><input type="checkbox" id="g4"><span class="txt"><span class="t">マイナンバーカードを持ち続ける手続き</span><span class="d">海外転出後も手続きすれば使える。転出届のときに窓口で聞く。</span></span></label>
+      <label class="item"><input type="checkbox" id="g5"><span class="txt"><span class="t">運転免許の期限を確認</span><span class="d">滞在中に切れるなら出発前に前倒しで更新できる。現地で運転するなら国際免許も取る。</span></span></label>
+      <label class="item"><input type="checkbox" id="g6"><span class="txt"><span class="t">郵便物の転送届を出す</span><span class="d">郵便局で手続きすれば実家などに転送できる（1年間）。</span></span></label>
+      <label class="item"><input type="checkbox" id="g7"><span class="txt"><span class="t">最近退職した人は税金の手続き</span><span class="d">源泉徴収票を受け取っておく。年の途中で出国するときは、出国前に確定申告するか納税管理人を決める。</span></span></label>
+    </div>
+
+    <div class="group">
+      <h3>お金・スマホ</h3>
+      <label class="item"><input type="checkbox" id="m1"><span class="txt"><span class="t">日本の銀行・クレジットカードを点検</span><span class="d">ネットバンキングが使えるか。カードの有効期限が1年以内に切れないか。</span></span></label>
+      <label class="item"><input type="checkbox" id="m2"><span class="txt"><span class="t">日本の電話番号を安いプランで残す</span><span class="d">銀行などのSMS認証に必要。povoなど月額ほぼ0円のプランが便利。</span></span></label>
+      <label class="item"><input type="checkbox" id="m3"><span class="txt"><span class="t">最初の1〜2週間分のお金を用意</span><span class="d">イギリスはタッチ決済がほぼどこでも使える。現金ポンドは少しでOK。Wise・Revolutなどのカードがあると楽。</span></span></label>
+      <label class="item"><input type="checkbox" id="m4"><span class="txt"><span class="t">LINEと2段階認証の引き継ぎ準備</span><span class="d">機種やSIMを変える前に、LINEの引き継ぎ設定と、銀行などの認証アプリ・SMS認証が使えるか確認。</span></span></label>
+      <label class="item"><input type="checkbox" id="m5"><span class="txt"><span class="t">使わなくなるサブスク・ジムを解約</span><span class="d">1年間使わないものは止めておく。</span></span></label>
+    </div>
+
+    <div class="group">
+      <h3>出発の準備</h3>
+      <label class="item"><input type="checkbox" id="p1"><span class="txt"><span class="t">航空券と荷物の確認</span><span class="d">オンラインチェックイン、預け荷物の重さ制限、空港までの行き方。</span></span></label>
+      <label class="item"><input type="checkbox" id="p2"><span class="txt"><span class="t">歯医者に行っておく</span><span class="d">イギリスの歯科は予約が取りにくく費用も高め。痛みや気になる所があれば今のうちに。</span></span></label>
+      <label class="item"><input type="checkbox" id="p3"><span class="txt"><span class="t">緊急連絡先をメモ</span><span class="d">カード会社の紛失窓口、在英国日本大使館、家族の連絡先。家族にも旅程とホストファミリーの住所を伝える。</span></span></label>
+    </div>
+
+    <div class="group">
+      <h3>持ち物</h3>
+      <label class="item"><input type="checkbox" id="b1"><span class="txt"><span class="t">常用薬＋英文の説明</span><span class="d">医師に英文レターを書いてもらえると安心。</span></span></label>
+      <label class="item"><input type="checkbox" id="b2"><span class="txt"><span class="t">英文の履歴書（CV）・卒業証明書・職歴の証明</span><span class="d">仕事探しで使う。</span></span></label>
+      <label class="item"><input type="checkbox" id="b3"><span class="txt"><span class="t">変換プラグ（BFタイプ）</span><span class="d">電圧は230V。スマホやPCの充電器はたいていそのまま使える。</span></span></label>
+      <label class="item"><input type="checkbox" id="b4"><span class="txt"><span class="t">防寒着・雨具</span><span class="d">11月下旬のロンドンは最高気温10℃前後で雨が多い。日の入りは16時ごろ。</span></span></label>
+      <label class="item"><input type="checkbox" id="b5"><span class="txt"><span class="t">ホストファミリーの情報を確認</span><span class="d">住所・電話番号・家族の名前をスマホと紙にメモ（入国審査で滞在先を聞かれることがある）。到着日時と空港からの行き方を先方と確認しておく。</span></span></label>
+      <label class="item"><input type="checkbox" id="b6"><span class="txt"><span class="t">ホストファミリーへのお土産</span><span class="d">日本のお菓子や小物など、かさばらない物を。</span></span></label>
+    </div>
+  </section>
+
+  <section data-sec="after">
+    <div class="sec-head"><span class="tag after">現地で</span><h2>着いてからやること</h2><span class="sec-count"></span></div>
+    <p class="sec-note">上から順にやるとスムーズです（SIM → 銀行 → NI番号 …）。</p>
+    <div class="group">
+      <label class="item"><input type="checkbox" id="a1"><span class="txt"><span class="t">SIMカード</span><span class="d">日本でeSIMを買っておくか、空港・街中でgiffgaff・Three・Voxiなどを契約。</span></span></label>
+      <label class="item"><input type="checkbox" id="a2"><span class="txt"><span class="t">銀行口座を作る</span><span class="d">Monzo・Revolutならアプリで早く作れる。給料の受け取りに必要。</span></span></label>
+      <label class="item"><input type="checkbox" id="a3"><span class="txt"><span class="t">NI番号（国民保険番号）を申請</span><span class="d">働くために必要。到着後にオンラインで申請。</span></span></label>
+      <label class="item"><input type="checkbox" id="a4"><span class="txt"><span class="t">GP（かかりつけ医）に登録</span><span class="d">ビザ申請で医療付加料（IHS）を払っているのでNHSの医療が受けられる。住所が決まったら近所のGPへ。</span></span></label>
+      <label class="item"><input type="checkbox" id="a5"><span class="txt"><span class="t">シェアコードを発行</span><span class="d">雇い主に働く資格を見せるときに使う。UKVIアカウントから出せる。</span></span></label>
+      <label class="item"><input type="checkbox" id="a6"><span class="txt"><span class="t">在留届を出す</span><span class="d">3か月以上いるなら日本大使館への届け出が義務。オンラインの「ORRネット」で出せる。</span></span></label>
+    </div>
+  </section>
+
+  <aside class="notice">
+    <h2>⚠ 気をつけること</h2>
+    <ul>
+      <li>ビザ・eVisa・NI番号の手続きはときどき変わります。最新は公式サイト <a href="https://www.gov.uk/" target="_blank" rel="noopener">gov.uk</a> で確認してください。</li>
+      <li>海外旅行保険は、NHSで足りない部分（歯科、持ち物の盗難、日本への緊急帰国）の備えに入っておくと安心です。</li>
+    </ul>
+  </aside>
+
+  <section class="info" id="help" data-menu="困ったときは">
+    <div class="sec-head"><span class="tag help">もしものとき</span><h2>困ったときは</h2></div>
+
+    <div class="card">
+      <h3>体調が悪い</h3>
+      <ul>
+        <li><b>命に関わる・大けが</b> → <span class="mono">999</span> に電話（救急車）。救急外来は「A&amp;E」</li>
+        <li><b>急ぎか分からない</b> → <span class="mono">111</span>（NHSの医療相談）。電話かNHSのサイトで</li>
+        <li><b>風邪・軽いけが</b> → 薬局（Pharmacy）で相談できる</li>
+        <li><b>ふだんの病気</b> → 登録したGP（かかりつけ医）を予約</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>パスポートを失くした</h3>
+      <ul>
+        <li>警察に届けて、受理番号（crime reference number）をもらう</li>
+        <li>在英国日本国大使館で再発行の手続き</li>
+        <li>新しいパスポートになったら、UKVIアカウントでeVisaの登録を更新</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>カード・スマホを盗まれた</h3>
+      <ul>
+        <li>カード会社に電話してすぐ止める（番号は「緊急連絡先」にメモ）</li>
+        <li>スマホは別の端末から位置確認・ロック・データ消去</li>
+        <li>警察に届ける（急ぎでなければ <span class="mono">101</span> かオンライン）。保険の請求に受理番号が要る</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>ホストファミリー・家・仕事のトラブル</h3>
+      <ul>
+        <li>ホストファミリーと合わないときは、我慢せず紹介元（エージェント・学校）に早めに相談</li>
+        <li>内見前にお金を振り込ませる部屋、時給が高すぎる仕事は詐欺を疑う</li>
+        <li>給料が払われない・契約と違うときは、やりとりを記録に残しておく</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="info" id="contacts" data-menu="緊急連絡先">
+    <div class="sec-head"><span class="tag help">もしものとき</span><h2>緊急連絡先</h2></div>
+    <div class="numbers">
+      <div class="num urgent"><b>999</b><span class="t">警察・消防・救急</span><span class="d">命に関わるとき。112でもつながる</span></div>
+      <div class="num"><b>111</b><span class="t">NHS 医療相談</span><span class="d">急ぎか分からない体調不良</span></div>
+      <div class="num"><b>101</b><span class="t">警察（急ぎでない）</span><span class="d">盗難の届け出など</span></div>
+    </div>
+    <div class="card">
+      <h3>在英国日本国大使館（領事部）</h3>
+      <p><span class="mono">+44 (0)20 7465 6500</span></p>
+      <p class="d">101-104 Piccadilly, London W1J 7JT<br>パスポートの紛失、事件・事故に巻き込まれたときの相談先。最新の受付時間は大使館のサイトで確認。</p>
+    </div>
+    <div class="card memo">
+      <h3>自分の連絡先メモ</h3>
+      <p class="d">書いた内容はこのブラウザに保存されます。</p>
+      <label for="c-host">ホストファミリー</label><input id="c-host" type="text" placeholder="名前・電話番号・住所">
+      <label for="c-family">日本の家族</label><input id="c-family" type="text" placeholder="名前・電話番号">
+      <label for="c-card">カード会社の紛失・盗難窓口</label><input id="c-card" type="text" placeholder="カードの裏面に書いてある海外用の番号">
+      <label for="c-ins">海外旅行保険の窓口</label><input id="c-ins" type="text" placeholder="保険証券に書いてある番号・証券番号">
+      <label for="c-agent">学校・エージェント</label><input id="c-agent" type="text" placeholder="担当者名・電話番号">
+    </div>
+  </section>
+
+  <section class="info" id="homesick" data-menu="寂しくなったとき">
+    <div class="sec-head"><span class="tag help">もしものとき</span><h2>寂しくなったとき</h2></div>
+    <div class="card">
+      <h3>それは普通のことです</h3>
+      <p>最初の1〜3か月はホームシックになりやすい時期です。イギリスの冬は16時ごろに暗くなるので、気分が落ち込みやすくもなります。</p>
+    </div>
+    <div class="card">
+      <h3>気持ちが少し楽になること</h3>
+      <ul>
+        <li>明るいうちに外を歩く。冬は日光が足りないので、NHSも10〜3月はビタミンDのサプリをすすめている</li>
+        <li>起きる時間・寝る時間を決めて、生活のリズムを作る</li>
+        <li>日本食を作る・食べに行く。ロンドンには日本の食材店や和食のお店がある</li>
+        <li>日本人のコミュニティや、趣味のサークル・スポーツに参加してみる</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>日本に電話するなら</h3>
+      <p>日本はイギリスより<b>9時間</b>進んでいます（3月末〜10月末のサマータイム中は8時間）。</p>
+      <p class="d">例：イギリスの夜9時 ＝ 日本の朝6時（冬）。日本の夜9時に話したいなら、イギリスの昼12時ごろ。</p>
+    </div>
+    <div class="card">
+      <h3>つらさが続くとき</h3>
+      <ul>
+        <li>家族や友だちに「ちょっとしんどい」と連絡してみる</li>
+        <li>眠れない・食べられない日が続くなら、GPに相談できる</li>
+        <li>誰かに話を聞いてほしいとき：Samaritans <span class="mono">116 123</span>（24時間・無料・英語）</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="reset">
+    <button type="button" id="resetBtn">チェックをすべて外す</button>
+    <span id="resetHint"></span>
+  </div>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<nav class="drawer" id="drawer" aria-label="目次" hidden>
+  <div class="drawer-head"><strong>目次</strong><button type="button" class="close-btn" id="closeMenu" aria-label="目次を閉じる">×</button></div>
+  <ul id="menuList"></ul>
+</nav>
+
+<script>
+(function(){
+  var KEY='uk-whv-checklist-v1';
+  var boxes=[].slice.call(document.querySelectorAll('.item input'));
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){saved={}}
+  boxes.forEach(function(b){b.checked=!!saved[b.id]});
+
+  function save(){
+    var s={};boxes.forEach(function(b){if(b.checked)s[b.id]=1});
+    try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}
+  }
+  function render(){
+    var done=0;
+    boxes.forEach(function(b){b.closest('.item').classList.toggle('done',b.checked);if(b.checked)done++});
+    document.querySelectorAll('section[data-sec]').forEach(function(sec){
+      var bs=sec.querySelectorAll('.item input'),n=0;
+      bs.forEach(function(b){if(b.checked)n++});
+      sec.querySelector('.sec-count').textContent=n+' / '+bs.length;
+    });
+    var pct=Math.round(done/boxes.length*100);
+    document.getElementById('progressLabel').textContent=(done===boxes.length?'ぜんぶ完了！ いってらっしゃい ':'ぜんぶで ')+done+' / '+boxes.length;
+    document.getElementById('progressPct').textContent=pct+'%';
+    document.getElementById('progressBar').style.width=pct+'%';
+    updateMenu();
+  }
+  // 目次（ハンバーガーメニュー）
+  var menuBtn=document.getElementById('menuBtn'),drawer=document.getElementById('drawer'),
+      scrim=document.getElementById('scrim'),closeBtn=document.getElementById('closeMenu'),
+      list=document.getElementById('menuList'),entries=[];
+  function addHeading(label){var li=document.createElement('li');li.className='menu-heading';li.textContent=label;list.appendChild(li)}
+  function addEntry(label,target,sub){
+    var li=document.createElement('li'),b=document.createElement('button'),l=document.createElement('span'),c=document.createElement('span');
+    b.type='button';b.className='menu-item'+(sub?' sub':'');l.textContent=label;c.className='menu-count';
+    b.appendChild(l);b.appendChild(c);li.appendChild(b);list.appendChild(li);
+    b.addEventListener('click',function(){
+      closeMenu(false);
+      var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'});
+    });
+    entries.push({boxes:target.querySelectorAll('.item input'),count:c});
+  }
+  document.querySelectorAll('section[data-sec]').forEach(function(sec){
+    var title=sec.querySelector('h2').textContent;
+    var named=[].slice.call(sec.querySelectorAll('.group')).filter(function(g){return g.querySelector('h3')});
+    if(named.length){addHeading(title);named.forEach(function(g){addEntry(g.querySelector('h3').textContent,g,true)})}
+    else addEntry(title,sec,false);
+  });
+  var notice=document.querySelector('.notice');
+  if(notice)addEntry('気をつけること',notice,false);
+  var extra=document.querySelectorAll('[data-menu]');
+  if(extra.length){addHeading('もしものとき');extra.forEach(function(el){addEntry(el.getAttribute('data-menu'),el,true)})}
+
+  // 連絡先メモの保存
+  var MKEY='uk-whv-memo-v1',memo={};
+  try{memo=JSON.parse(localStorage.getItem(MKEY)||'{}')||{}}catch(e){memo={}}
+  document.querySelectorAll('.memo input').forEach(function(inp){
+    if(memo[inp.id])inp.value=memo[inp.id];
+    inp.addEventListener('input',function(){memo[inp.id]=inp.value;try{localStorage.setItem(MKEY,JSON.stringify(memo))}catch(e){}});
+  });
+  function updateMenu(){
+    entries.forEach(function(e){
+      if(!e.boxes.length){e.count.textContent='';return}
+      var n=0;for(var i=0;i<e.boxes.length;i++)if(e.boxes[i].checked)n++;
+      e.count.textContent=n+' / '+e.boxes.length;e.count.classList.toggle('full',n===e.boxes.length);
+    });
+  }
+  function openMenu(){drawer.hidden=false;scrim.hidden=false;menuBtn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';closeBtn.focus()}
+  function closeMenu(refocus){drawer.hidden=true;scrim.hidden=true;menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow='';if(refocus!==false)menuBtn.focus()}
+  menuBtn.addEventListener('click',openMenu);
+  closeBtn.addEventListener('click',function(){closeMenu()});
+  scrim.addEventListener('click',function(){closeMenu()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!drawer.hidden)closeMenu()});
+
+  boxes.forEach(function(b){b.addEventListener('change',function(){save();render()})});
+
+  var btn=document.getElementById('resetBtn'),hint=document.getElementById('resetHint'),armed=false,timer;
+  btn.addEventListener('click',function(){
+    if(!armed){
+      armed=true;btn.classList.add('confirm');btn.textContent='もう一度押すと外します';
+      hint.textContent='';
+      timer=setTimeout(function(){armed=false;btn.classList.remove('confirm');btn.textContent='チェックをすべて外す'},4000);
+      return;
+    }
+    clearTimeout(timer);armed=false;btn.classList.remove('confirm');btn.textContent='チェックをすべて外す';
+    boxes.forEach(function(b){b.checked=false});save();render();hint.textContent='すべて外しました';
+  });
+  render();
+})();
+</script>
+
+</body>
+</html>
