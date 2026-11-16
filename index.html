@@ -184,6 +184,14 @@ body.on-home .back{display:none}
 .phrase .hint{font-size:12px;color:var(--muted)}
 .phrase:active,.chip:active{filter:brightness(.95)}
 .phrase:focus-visible,.chip:focus-visible{outline:3px solid var(--gold-light);outline-offset:2px}
+.mylabel{margin:4px 0 -8px;font:700 13px var(--f-serif);letter-spacing:.12em;color:var(--gold-light);text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.mycard{position:relative}
+.mycard .phrase{padding-right:64px}
+.mycard .del{position:absolute;top:8px;right:8px;min-width:40px;height:36px;padding:0 10px;border:0;border-radius:8px;background:#f4eee4;color:var(--muted);font:700 14px var(--f-body);cursor:pointer}
+.mycard .del.armed{background:var(--red-soft);color:var(--red)}
+.mycard .del:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.addbtn{align-self:flex-start;margin-top:8px;font:inherit;font-weight:700;font-size:15px;padding:10px 20px;border:0;border-radius:8px;background:var(--tk-1);color:var(--gold-light);cursor:pointer}
+.addbtn:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
 .chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .chip{font:inherit;font-weight:700;font-size:14px;padding:10px 12px;border-radius:10px;border:1px solid #e6d9c2;background:#faf5ec;color:var(--ink);cursor:pointer;text-align:left}
 .show{position:fixed;inset:0;z-index:60;background:#ffffff;color:#111111;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:22px;text-align:center;cursor:pointer;
@@ -229,6 +237,16 @@ body.on-home .back{display:none}
 #v-homesick .card li::marker{content:"✿  ";color:#c9a45c;font-size:12px}
 #v-homesick .letter{background:#fffaf1;border:1px solid #ead9bb;outline:1px solid #ead9bb;outline-offset:-6px}
 #v-homesick .letter .sign{text-align:right;font-weight:600;color:#7a2e22}
+/* 写真の上に手紙：写真は切らずに全体を見せ、下の端から暗く溶かして、言葉は顔にかからない位置から始める
+   （写真の縦横比 1280×1127 → 高さ＝幅の88%） */
+/* 写真はカードの内側に12pxの余白をとって置く（角は四角のまま＝端の髪が削れない） */
+#v-homesick .letter.photo{position:relative;overflow:hidden;border:0;outline:none;padding:calc(78% - 7px) 20px 22px;
+  background:#2a120e url("memories.webp") center 12px/calc(100% - 24px) auto no-repeat}
+#v-homesick .letter.photo::before{content:"";position:absolute;left:12px;right:12px;top:12px;padding-top:calc(88% - 21px);
+  background:linear-gradient(180deg,rgba(42,18,14,0) 0%,rgba(42,18,14,0) 62%,rgba(42,18,14,.75) 85%,#2a120e 100%);pointer-events:none}
+#v-homesick .letter.photo > *{position:relative}
+#v-homesick .letter.photo h3{color:#f6e3b8}
+#v-homesick .letter.photo p{color:#fbf1dc}
 
 /* ===== 動き ===== */
 @keyframes stripIn{0%{opacity:0;transform:perspective(800px) translateY(26px) rotateX(30deg) scale(.94);filter:blur(8px) brightness(1.8)}60%{opacity:1;filter:none}100%{opacity:1;transform:none;filter:none}}
@@ -597,10 +615,11 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
       </ul>
       <a class="tel" href="tel:116123">Samaritansに電話する</a>
     </div>
-    <div class="card letter">
+    <div class="card letter photo" role="group" aria-label="ふたりの思い出の写真と、さいごのメッセージ">
       <h3>さいごに</h3>
       <p>知らない国で1年間がんばろうって決めた時点で、みぱはもう十分すごいよ。</p>
-      <p>疲れたら休んでいいし、帰りたくなったら帰ってきてもいい。どんなときも、ずっと味方だからね。</p>    </div>
+      <p>疲れたら休んでいいし、帰りたくなったら帰ってきてもいい。どんなときも、ずっと味方だからね。</p>
+    </div>
   </div>
 </section>
 
@@ -620,6 +639,21 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
   <div class="content">
     <p class="sec-note">とっさに英語が出てこないときは、カードを押して、画面を相手に見せてください。</p>
 
+    <p class="mylabel" id="myLabel" hidden>自分のカード</p>
+    <div class="plist" id="myList" hidden></div>
+
+    <form class="card tool" id="myForm">
+      <h3>自分のカードを作る</h3>
+      <p class="d">よく使う言葉を、自分でカードにできます。</p>
+      <label for="myJp">日本語（自分用のメモ）</label>
+      <input id="myJp" type="text" placeholder="例：カプチーノのMサイズください" autocomplete="off">
+      <label for="myEn">相手に見せる英語</label>
+      <input id="myEn" type="text" placeholder="例：A medium cappuccino, please." autocomplete="off" required>
+      <button type="submit" class="addbtn">カードを追加</button>
+      <p class="d" id="myMsg">英語が分からないときは、翻訳アプリで調べて貼り付けると便利です。</p>
+    </form>
+
+    <p class="mylabel">よく使うカード</p>
     <div class="plist">
       <button type="button" class="phrase" data-address="1" data-en="Could you take me to this address, please?"><span class="jp">この住所まで行きたいです</span><span class="en">Could you take me to this address, please?</span><span class="hint">ホストファミリーのメモ（緊急連絡先のページ）も一緒に表示されます</span></button>
       <button type="button" class="phrase" data-en="I don't feel well. Could you help me, please?"><span class="jp">具合が悪いです。助けてください</span><span class="en">I don't feel well. Could you help me, please?</span></button>
@@ -962,6 +996,45 @@ body.intro .foot{animation:fadeUp .7s ease-out 1.9s both}
   [].forEach.call(document.querySelectorAll('#v-phrases .chip'),function(b){
     b.addEventListener('click',function(){openShow(b.dataset.en,b.dataset.jp,false)});
   });
+
+  // ---- 自分のカード（自分で作れる英語カード） ----
+  var PKEY='uk-whv-phrases-v1',mine=[];
+  try{mine=JSON.parse(localStorage.getItem(PKEY)||'[]')||[]}catch(e){mine=[]}
+  if(!Array.isArray(mine))mine=[];
+  var myList=document.getElementById('myList'),myLabel=document.getElementById('myLabel'),myJp=document.getElementById('myJp'),myEn=document.getElementById('myEn'),myMsg=document.getElementById('myMsg');
+  var myMsgDefault=myMsg.textContent;
+  function saveMine(){try{localStorage.setItem(PKEY,JSON.stringify(mine))}catch(e){}}
+  function renderMine(){
+    myList.textContent='';
+    mine.forEach(function(p,i){
+      var wrap=document.createElement('div');wrap.className='mycard';
+      var b=document.createElement('button');b.type='button';b.className='phrase';
+      if(p.jp){var j=document.createElement('span');j.className='jp';j.textContent=p.jp;b.appendChild(j)}
+      var en=document.createElement('span');en.className='en';en.textContent=p.en;b.appendChild(en);
+      b.addEventListener('click',function(){openShow(p.en,p.jp||'',false)});
+      var del=document.createElement('button');del.type='button';del.className='del';del.textContent='×';del.setAttribute('aria-label','このカードを消す');
+      var timer;
+      del.addEventListener('click',function(){
+        if(!del.classList.contains('armed')){
+          del.classList.add('armed');del.textContent='消す';
+          timer=setTimeout(function(){del.classList.remove('armed');del.textContent='×'},3000);
+          return;
+        }
+        clearTimeout(timer);mine.splice(i,1);saveMine();renderMine();
+      });
+      wrap.appendChild(b);wrap.appendChild(del);myList.appendChild(wrap);
+    });
+    myList.hidden=myLabel.hidden=!mine.length;
+  }
+  document.getElementById('myForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var en=myEn.value.trim(),jp=myJp.value.trim();
+    if(!en){myMsg.textContent='「相手に見せる英語」を入れてください';myEn.focus();return}
+    mine.unshift({jp:jp,en:en});saveMine();renderMine();
+    myJp.value='';myEn.value='';myMsg.textContent='追加しました。上の「自分のカード」に入っています';
+    setTimeout(function(){myMsg.textContent=myMsgDefault},4000);
+  });
+  renderMine();
 
   // ---- やりたいことリスト ----
   var WKEY='uk-whv-wish-v1',wishes=[];
